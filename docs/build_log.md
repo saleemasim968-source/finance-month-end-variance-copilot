@@ -150,3 +150,23 @@ The PM asked for a frontend and a backend to show the prototype. This replaces t
 **Quality gate:** passed. All tests pass (84/84); a clean run from an empty database works with one command (0.91 s).
 **Requirements:** NFR-02, NFR-07, NFR-08 verified. BR-01 and NFR-06 built and waiting on the PM. **Totals: Must 20/21, Should 2/3, Could 1/1 verified.**
 **Milestone:** M6 open. Waiting on PM review, sponsor sign-offs (C-001, C-003, C-005), a demo rehearsal, the KNIME build and one live model run.
+
+---
+
+## Stage 7: Landing page and new look (after WP 7), 10 Oct
+
+The PM asked for a frontend that looks like a consulting solution page, opening with a sales and market pitch, with the working tabs behind it.
+
+**Changed**
+| File | Change |
+|---|---|
+| `app/frontend/index.html` | New dark header with a wordmark and tabs; new **Home** landing page: hero with live results, the challenge, how it works (each step links to its tab), proof points, AI controls, impact by role, before/after hours, call to action |
+| `app/frontend/styles.css` | Brand layer (dark charcoal, teal accent), full-width landing bands, restyled header and buttons; working tabs keep the validated chart palette |
+| `app/frontend/app.js` | `renderHome()` fills every landing-page figure from the API; Home is the default view; buttons and links jump to tabs |
+| `app/backend/main.py` | New `GET /api/business-case`: reads the hours table from `docs/business_case.md`, so it exists in one place only |
+| `tests/test_dashboard.py` | 2 new tests: landing page is the default and is API-driven; the business-case endpoint matches the document |
+| `README.md`, `docs/screenshots/home.png` | Landing-page screenshot and description |
+
+**Decided:** D-042 (consulting-style layout, own branding, no EY name, logo, colours or text).
+**Checked by eye:** full landing page and overview at desktop width. Fixed buttons that rendered white because of CSS order.
+**Tests:** 86/86.

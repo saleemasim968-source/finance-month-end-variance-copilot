@@ -14,11 +14,13 @@ warehouse and the review store:
   POST /api/flags/{id}/reopen          back to Draft
   PUT  /api/flags/{id}/cause           cost-centre owner's cause
   GET  /api/data-quality               findings, reconciliation, mapping coverage
+  GET  /api/business-case              hours per close, read from docs/business_case.md
   POST /api/pipeline/run               rebuild everything from the raw files
 
 Run: python -m app.backend   (then open http://127.0.0.1:8000)
 """
 
+import re
 import threading
 from contextlib import contextmanager
 from datetime import datetime
@@ -126,6 +128,16 @@ def get_bridge(site: str = "all", period: str = "all"):
 def get_data_quality():
     with warehouse() as con:
         return queries.data_quality(con)
+
+
+@app.get("/api/business-case")
+def get_business_case():
+    """The estimated-hours table of docs/business_case.md, so the landing page never restates it."""
+    text = (ROOT / "docs" / "business_case.md").read_text(encoding="utf-8")
+    rows = [{"activity": a.strip(), "today_h": float(t), "after_h": float(n), "assumption": s.strip()}
+            for a, t, n, s in re.findall(r"^\| ([A-Z][^|]+)\| (\d+\.\d) \| (\d+\.\d) \| ([^|]+)\|$", text, re.MULTILINE)]
+    return {"rows": rows, "today_h": round(sum(r["today_h"] for r in rows), 1),
+            "after_h": round(sum(r["after_h"] for r in rows), 1)}
 
 
 @app.get("/api/flags")

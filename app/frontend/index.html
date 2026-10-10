@@ -9,30 +9,42 @@
   <script src="/static/app.js" defer></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <h1>Month-End Variance Copilot</h1>
+  <div class="notice" role="note">
+    <strong>Synthetic data.</strong> <span id="notice-text">Independent portfolio project. All data is synthetic, and all sites and stakeholders are fictional.</span>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="#home" data-goto="home" aria-label="Variance Copilot home">
+        <span class="wordmark-mark" aria-hidden="true"></span>
+        <span>Variance<strong>Copilot</strong></span>
+      </a>
+      <nav class="tabs" role="tablist" aria-label="Views">
+        <button role="tab" class="tab" data-tab="home" aria-selected="true">Home</button>
+        <button role="tab" class="tab" data-tab="overview" aria-selected="false">Overview</button>
+        <button role="tab" class="tab" data-tab="sites" aria-selected="false">Site comparison</button>
+        <button role="tab" class="tab" data-tab="bridge" aria-selected="false">Variance bridge</button>
+        <button role="tab" class="tab" data-tab="flags" aria-selected="false">Flagged items <span class="count" id="flag-count"></span></button>
+        <button role="tab" class="tab" data-tab="quality" aria-selected="false">Data quality</button>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-ghost" id="theme-btn" aria-label="Switch light or dark theme">Theme</button>
+        <button class="btn btn-accent" data-goto="overview">Launch platform</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-bar" id="app-bar">
+    <div>
+      <h1 class="app-title">Month-End Variance Copilot</h1>
       <p class="subtitle">Plan versus actual for three wafer fabs · January to September 2026</p>
     </div>
     <div class="topbar-actions">
       <span class="meta-chip" id="writer-chip" title="Who drafts the commentary">Commentary: …</span>
       <span class="meta-chip" id="refreshed-chip">Data: …</span>
       <button class="btn" id="rebuild-btn" title="Rebuild all data from the raw site files">Rebuild data</button>
-      <button class="btn btn-ghost" id="theme-btn" aria-label="Switch light or dark theme">Theme</button>
     </div>
-  </header>
-
-  <div class="notice" role="note">
-    <strong>Synthetic data.</strong> <span id="notice-text">Independent portfolio project. All data is synthetic, and all sites and stakeholders are fictional.</span>
   </div>
-
-  <nav class="tabs" role="tablist" aria-label="Views">
-    <button role="tab" class="tab" data-tab="overview" aria-selected="true">Overview</button>
-    <button role="tab" class="tab" data-tab="sites" aria-selected="false">Site comparison</button>
-    <button role="tab" class="tab" data-tab="bridge" aria-selected="false">Variance bridge</button>
-    <button role="tab" class="tab" data-tab="flags" aria-selected="false">Flagged items <span class="count" id="flag-count"></span></button>
-    <button role="tab" class="tab" data-tab="quality" aria-selected="false">Data quality</button>
-  </nav>
 
   <div class="filters" id="filters">
     <label>Period
@@ -45,8 +57,150 @@
   </div>
 
   <main>
+    <!-- Home: landing page -->
+    <section class="view home" id="view-home" role="tabpanel">
+      <div class="hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Finance data transformation · Month-end close</p>
+            <h2 class="hero-title">From three site reports to one reviewed variance story, in seconds.</h2>
+            <p class="hero-lead">Variance Copilot harmonises cost reports that arrive in different layouts, languages, units and currencies. It checks them against source, separates <em>producing less</em> from <em>spending more</em>, and drafts commentary in which every number is verified before a controller signs off.</p>
+            <div class="hero-ctas">
+              <button class="btn btn-accent btn-lg" data-goto="overview">Explore the live prototype</button>
+              <a class="btn btn-outline-light btn-lg" href="#how-it-works">See how it works</a>
+            </div>
+          </div>
+          <aside class="hero-panel" aria-label="Live results from the prototype">
+            <p class="panel-label">Live from this month-end run</p>
+            <div class="panel-stats" id="hero-stats">
+              <div><span class="stat-value">…</span><span class="stat-label">Loading</span></div>
+            </div>
+            <p class="panel-foot">Figures are read from the running pipeline, not typed into this page.</p>
+          </aside>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="band-inner">
+          <p class="eyebrow eyebrow-dark">The challenge</p>
+          <h2 class="band-title">Month-end is the most time-critical week in finance. It is also where the most manual work hides.</h2>
+          <div class="cards-3">
+            <article class="pitch-card">
+              <span class="card-index">01</span>
+              <h3>Slow close</h3>
+              <p>Every site exports its own report. Controllers re-key accounts, convert thousands and currencies, and tie out totals by hand before analysis can even start.</p>
+            </article>
+            <article class="pitch-card">
+              <span class="card-index">02</span>
+              <h3>Sites that can't be compared</h3>
+              <p>Different charts of accounts, cost-centre structures and units mean "cost per wafer" means something different at every fab.</p>
+            </article>
+            <article class="pitch-card">
+              <span class="card-index">03</span>
+              <h3>Commentary nobody can trace</h3>
+              <p>Narratives mix "we produced less" with "we spent more", and the figures in the text can't be traced back to a source line.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="band band-muted" id="how-it-works">
+        <div class="band-inner">
+          <p class="eyebrow eyebrow-dark">How it works</p>
+          <h2 class="band-title">Four steps, one command, full lineage.</h2>
+          <ol class="steps">
+            <li class="step">
+              <span class="step-no">1</span>
+              <h3>Harmonise</h3>
+              <p>Raw files load unchanged. SQL converts periods, units and currencies, and maintained mapping tables put every row on the group chart of accounts while keeping the local codes beside it.</p>
+              <button class="link-btn" data-goto="bridge">See the row-level table →</button>
+            </li>
+            <li class="step">
+              <span class="step-no">2</span>
+              <h3>Check</h3>
+              <p>Duplicates, missing actuals and unmapped codes are reported with file and line. Every site and month is reconciled to source; an unmapped code stops the run.</p>
+              <button class="link-btn" data-goto="quality">Open data quality →</button>
+            </li>
+            <li class="step">
+              <span class="step-no">3</span>
+              <h3>Analyse</h3>
+              <p>A flexed budget splits each variance into a volume effect and a spend effect. Fixed, configurable thresholds flag only what is material.</p>
+              <button class="link-btn" data-goto="overview">View the analysis →</button>
+            </li>
+            <li class="step">
+              <span class="step-no">4</span>
+              <h3>Explain</h3>
+              <p>Commentary is drafted from the calculated figures only. Any number not in the data is rejected, cost-centre owners add the cause, and a controller approves.</p>
+              <button class="link-btn" data-goto="flags">Review flagged items →</button>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="band-inner">
+          <p class="eyebrow eyebrow-dark">Proof, not promises</p>
+          <h2 class="band-title">Tested against a month-end with known problems planted in it.</h2>
+          <div class="proof-grid" id="proof-grid"></div>
+          <p class="fine-print">Measured on the synthetic data set shipped with the prototype. Hours saved is an estimate from the <a href="https://github.com/saleemasim968-source/finance-month-end-variance-copilot/blob/main/docs/business_case.md" target="_blank" rel="noopener">business case</a>, to be validated in a real close.</p>
+        </div>
+      </div>
+
+      <div class="band band-dark">
+        <div class="band-inner split">
+          <div>
+            <p class="eyebrow">AI you can audit</p>
+            <h2 class="band-title">The model writes words. The pipeline owns the numbers.</h2>
+            <p class="band-lead">Generative AI speeds up commentary, but finance can't accept a figure nobody can trace. Every control below runs on every draft, whether a language model or the built-in template wrote it.</p>
+          </div>
+          <ul class="controls">
+            <li><strong>Number check.</strong> Every figure in a draft must match the calculated data, or the draft is rejected and rewritten.</li>
+            <li><strong>Human sign-off.</strong> Nothing is released without a controller's approval, recorded with role and time.</li>
+            <li><strong>Data minimisation.</strong> Only rounded, aggregated figures for one item are sent to the model. No person-level data exists anywhere.</li>
+            <li><strong>Full lineage.</strong> Every reported figure points to its source file and line.</li>
+            <li><strong>Works offline.</strong> Without an AI key, a template drafts the commentary and every other control still applies.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="band band-muted">
+        <div class="band-inner">
+          <p class="eyebrow eyebrow-dark">Impact by role</p>
+          <h2 class="band-title">Built around the people who own the close.</h2>
+          <div class="cards-4">
+            <article class="pitch-card compact"><h3>Head of finance</h3><p>One comparable view of all sites, with material items already explained.</p></article>
+            <article class="pitch-card compact"><h3>Controllers</h3><p>Review and approve drafts instead of writing every narrative from scratch.</p></article>
+            <article class="pitch-card compact"><h3>Site finance</h3><p>Local accounts and cost centres stay visible beside the group structure.</p></article>
+            <article class="pitch-card compact"><h3>IT, audit and governance</h3><p>SQL logic and mapping tables that can move to a central platform; logged AI use.</p></article>
+          </div>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="band-inner">
+          <p class="eyebrow eyebrow-dark">Before and after</p>
+          <h2 class="band-title">Estimated hours per monthly close</h2>
+          <div class="table-wrap"><table class="pitch-table" id="table-business-case"></table></div>
+          <p class="stack">Open stack: <span>Python</span><span>DuckDB</span><span>SQL</span><span>pandas</span><span>FastAPI</span><span>Plotly</span><span>Claude API</span><span>KNIME</span></p>
+        </div>
+      </div>
+
+      <div class="band band-cta">
+        <div class="band-inner cta-inner">
+          <div>
+            <h2 class="band-title">See the whole month-end in the live prototype.</h2>
+            <p class="band-lead">Five working views, from data quality to approved commentary.</p>
+          </div>
+          <div class="hero-ctas">
+            <button class="btn btn-accent btn-lg" data-goto="overview">Launch the platform</button>
+            <a class="btn btn-outline-light btn-lg" href="https://github.com/saleemasim968-source/finance-month-end-variance-copilot" target="_blank" rel="noopener">View the source</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Overview -->
-    <section class="view" id="view-overview" role="tabpanel">
+    <section class="view" id="view-overview" role="tabpanel" hidden>
       <div class="tiles" id="kpi-tiles"></div>
       <p class="footnote" id="not-posted-note"></p>
       <div class="card">

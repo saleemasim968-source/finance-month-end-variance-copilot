@@ -161,3 +161,17 @@ def test_german_draft_through_the_api(client):
 
 def test_unknown_item_returns_404(client):
     assert client.post("/api/flags/spend|NOPE|2026-01|X|Y/regenerate", json={}).status_code == 404
+
+
+# --- Landing page ------------------------------------------------------------------------------
+
+def test_landing_page_is_the_default_view_and_reads_its_figures_from_the_api(client):
+    page = client.get("/").text
+    assert 'id="view-home"' in page and 'data-tab="home" aria-selected="true"' in page
+    assert 'id="hero-stats"' in page and 'id="proof-grid"' in page   # filled from the API, not typed in
+
+
+def test_business_case_endpoint_matches_the_document(client):
+    data = client.get("/api/business-case").json()
+    assert len(data["rows"]) == 4
+    assert data["today_h"] == 18.5 and data["after_h"] == 3.3

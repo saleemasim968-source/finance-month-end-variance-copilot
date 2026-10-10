@@ -9,6 +9,8 @@ At month-end, three fictional wafer fabs each send a cost report in their own la
 3. **Analyse:** plan-versus-actual variances are split into a **volume effect** (fewer or more wafers) and a **spend effect** (cost above or below the flexed budget). Material items are flagged.
 4. **Explain:** commentary is drafted from the calculated figures only. **Every number in it is checked against the data**, the cost-centre owner can add the cause, and a controller approves it.
 
+![Landing page](docs/screenshots/home.png)
+
 ![Overview](docs/screenshots/overview.png)
 
 ## Quick start
@@ -30,6 +32,7 @@ The commentary works without any API key: a fixed template writes the drafts. To
 
 | View | Shows |
 |---|---|
+| Home | Landing page: the problem, how the platform works, live proof points read from the pipeline, AI controls, impact by role, before/after hours |
 | Overview | Plan, actual, variance, volume and spend effect; monthly split; one row per site |
 | Site comparison | Cost per wafer, plan and actual; monthly trend; variance % by site and cost type |
 | Variance bridge | Volume effect plus spend effect per cost type = total variance, per site and month, with every underlying row and its source line |

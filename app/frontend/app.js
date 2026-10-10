@@ -89,6 +89,45 @@ function baseLayout(extra = {}) {
 const plotConfig = { displayModeBar: false, responsive: true };
 function plot(id, traces, layout) { Plotly.react(id, traces, baseLayout(layout), plotConfig); }
 
+// --- Home (landing page) ----------------------------------------------------------------------
+
+async function renderHome() {
+  const [dq, overview, flags, business] = await Promise.all([
+    api("/api/data-quality"), api("/api/overview"), api("/api/flags"), api("/api/business-case")]);
+  const passed = dq.reconciliation.filter((r) => r.passed).length;
+  const worst = Math.max(...dq.reconciliation.map((r) => Math.abs(r.difference_eur)));
+  const flagCount = flags.length;
+  const approved = flags.filter((i) => i.commentary && i.commentary.status === "Approved").length;
+  const sites = state.meta.sites.length;
+  const saved = business.today_h - business.after_h;
+
+  $("#hero-stats").innerHTML = [
+    [`${dq.mapped_rows}/${dq.harmonised_rows}`, `rows mapped across ${sites} sites`],
+    [`${passed}/${dq.reconciliation.length}`, "reconciliation checks passed"],
+    [String(dq.findings.length), "source-data problems caught"],
+    [String(flagCount), `material items flagged · ${approved} approved`],
+  ].map(([v, l]) => `<div><span class="stat-value">${esc(v)}</span><span class="stat-label">${esc(l)}</span></div>`).join("");
+
+  const proof = [
+    [`${Math.round(dq.mapped_rows / dq.harmonised_rows * 100)}<small>%</small>`, "Rows on one structure",
+      `${nf0.format(dq.harmonised_rows)} rows from ${sites} layouts, languages and currencies, each with its local codes and source line.`],
+    [`EUR ${nf0.format(worst)}`, "Largest reconciliation gap",
+      `${passed} of ${dq.reconciliation.length} site-month checks tie back to the source files.`],
+    [`${dq.findings.length}<small>/2</small>`, "Planted data errors caught",
+      "A duplicated ledger line and a missing actual, both reported with file and line."],
+    [`${flagCount}<small> of ${nf0.format(dq.harmonised_rows)}</small>`, "Items flagged as material",
+      `${overview.flags.spend || 0} spend and ${overview.flags.volume || 0} volume flags, each tracing to a planted business event.`],
+    [`~${nf0.format(saved)}<small> h</small>`, "Saved per close (estimate)",
+      `${nf1.format(business.today_h)} h of manual work becomes ${nf1.format(business.after_h)} h of review.`],
+  ];
+  $("#proof-grid").innerHTML = proof.map(([v, l, sub]) =>
+    `<div class="proof"><div class="proof-value">${v}</div><div class="proof-label">${esc(l)}</div><div class="proof-sub">${esc(sub)}</div></div>`).join("");
+
+  const rows = business.rows.map((r) => `<tr><td>${esc(r.activity)}</td><td class="num">${nf1.format(r.today_h)}</td><td class="num">${nf1.format(r.after_h)}</td><td class="muted">${esc(r.assumption)}</td></tr>`).join("");
+  $("#table-business-case").innerHTML = `<thead><tr><th>Activity</th><th class="num">Today (h)</th><th class="num">With the platform (h)</th><th>Assumption</th></tr></thead>
+    <tbody>${rows}<tr class="total"><td>Total per close</td><td class="num">${nf1.format(business.today_h)}</td><td class="num">${nf1.format(business.after_h)}</td><td>About ${nf0.format(saved)} hours saved per close (estimate)</td></tr></tbody>`;
+}
+
 // --- Overview --------------------------------------------------------------------------------
 
 async function renderOverview() {
@@ -382,7 +421,7 @@ async function renderQuality() {
 
 // --- Shell -----------------------------------------------------------------------------------
 
-const RENDER = { overview: renderOverview, sites: renderSites, bridge: renderBridge, flags: renderFlags, quality: renderQuality };
+const RENDER = { home: renderHome, overview: renderOverview, sites: renderSites, bridge: renderBridge, flags: renderFlags, quality: renderQuality };
 
 async function render() {
   const view = $(`#view-${state.tab}`);
@@ -396,8 +435,9 @@ function selectTab(tab) {
   document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
   document.querySelectorAll(".view").forEach((v) => { v.hidden = v.id !== `view-${tab}`; });
   $("#site-filter").hidden = tab !== "bridge";
-  $("#filters").hidden = tab === "flags" || tab === "quality";
-  try { localStorage.setItem("vc-tab", tab); } catch { /* storage unavailable */ }
+  $("#filters").hidden = ["home", "flags", "quality"].includes(tab);
+  $("#app-bar").hidden = tab === "home";
+  window.scrollTo({ top: 0 });
   history.replaceState(null, "", `${location.search}#${tab}`);
   render();
 }
@@ -466,15 +506,22 @@ async function init() {
   $("#site-select").addEventListener("change", (e) => { state.site = e.target.value; render(); });
   $("#flag-list").addEventListener("click", (e) => { const b = e.target.closest("[data-action]"); if (b) flagAction(b); });
   $("#rebuild-btn").addEventListener("click", (e) => rebuild(e.currentTarget));
+  document.addEventListener("click", (e) => {
+    const target = e.target.closest("[data-goto]");
+    if (target) { e.preventDefault(); selectTab(target.dataset.goto); }
+  });
+  window.addEventListener("hashchange", () => {
+    const tab = location.hash.slice(1);
+    if (RENDER[tab] && tab !== state.tab) selectTab(tab);
+  });
   try {
     await loadMeta();
   } catch (error) {
     toast(error.message);
     return;
   }
-  let tab = location.hash.slice(1);
-  if (!RENDER[tab]) { try { tab = localStorage.getItem("vc-tab") || "overview"; } catch { tab = "overview"; } }
-  selectTab(RENDER[tab] ? tab : "overview");
+  const tab = location.hash.slice(1);
+  selectTab(RENDER[tab] ? tab : "home");          // the landing page opens by default
   api("/api/flags").then((items) => {
     const open = items.filter((i) => !i.commentary || i.commentary.status !== "Approved").length;
     $("#flag-count").textContent = `${open}/${items.length}`;
