@@ -11,7 +11,7 @@ All data is synthetic, and every site and stakeholder is fictional. No real comp
    - explain every new file in plain language (R04: each module explainable in two sentences);
    - run the quality gate for that package (doc 03 §7, table below);
    - report which requirement IDs (doc 05) are now **Verified**, and which are only **Built**.
-3. **`src/generate_data.py` must not be modified.** It is WBS 2.1 and is treated as complete.
+3. **`src/generate_data.py` must not be modified.** It was written in WP 2 with the PM's permission (D-023) and is now frozen. `tests/test_data_foundation.py` checks that the committed data matches a fresh run.
 4. Record every decision, deviation, issue or change in `docs/log_entries_for_07.md`, ready to copy into doc 07 (D-xxx decisions, C-xxx changes, I-xxx issues).
 5. "Must" requirements and success criteria can only be changed with sponsor approval via doc 07. The PM may drop "Should" and "Could" items.
 6. Do not write product code for a package before it is the current package.
@@ -190,3 +190,9 @@ SC-1 100% rows mapped · SC-2 reconciliation < 0.01% · SC-3 2/2 data issues fou
 ## Open questions
 
 The design decisions D-009 to D-022 and changes C-001 to C-004 in `docs/log_entries_for_07.md` are approved and override doc 04 where they differ (e.g. `source_line_plan`/`source_line_actual` instead of `source_row`). Only I-001 (missing generator) is still open. Don't guess an answer to any item marked OPEN.
+
+## Commands
+
+- Set up: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
+- Regenerate data: `.venv/bin/python src/generate_data.py`. The output must equal the committed files; a test checks this.
+- Tests (quality gates): `.venv/bin/python -m pytest -v`

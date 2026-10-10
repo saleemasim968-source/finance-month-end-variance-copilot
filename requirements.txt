@@ -1,0 +1,2 @@
+# Pinned packages. Extended per work package.
+pytest==9.1.1

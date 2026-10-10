@@ -1,0 +1,19 @@
+site,local_account_code,local_account_name,group_account
+FAB_NORTH,400000,Personnel expenses,Personnel
+FAB_NORTH,410000,Depreciation,Depreciation
+FAB_NORTH,420000,Energy and utilities,Energy
+FAB_NORTH,430000,Production materials,Materials
+FAB_NORTH,440000,Maintenance and repair,Maintenance
+FAB_NORTH,450000,External services,External services
+FAB_ALPS,6000,Personalaufwand,Personnel
+FAB_ALPS,6100,Abschreibungen,Depreciation
+FAB_ALPS,6200,"Energie (Strom, Wärme)",Energy
+FAB_ALPS,6300,Fertigungsmaterial,Materials
+FAB_ALPS,6400,Instandhaltung,Maintenance
+FAB_ALPS,6500,Fremdleistungen,External services
+FAB_ASIA,P100,Staff costs,Personnel
+FAB_ASIA,D200,Depreciation - equipment,Depreciation
+FAB_ASIA,U300,Utilities,Energy
+FAB_ASIA,M400,Direct materials,Materials
+FAB_ASIA,R500,Repairs and maintenance,Maintenance
+FAB_ASIA,S600,Contract services,External services

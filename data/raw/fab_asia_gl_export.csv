@@ -1,0 +1,434 @@
+Period,CC,GL Account,GL Description,Version,Amount
+Jan-26,MY-LIT,P100,Staff costs,BUD,3967177.31
+Jan-26,MY-LIT,P100,Staff costs,ACT,3907012.27
+Jan-26,MY-LIT,D200,Depreciation - equipment,BUD,8246643.22
+Jan-26,MY-LIT,D200,Depreciation - equipment,ACT,8358292.53
+Jan-26,MY-LIT,U300,Utilities,BUD,619894.28
+Jan-26,MY-LIT,U300,Utilities,ACT,624412.16
+Jan-26,MY-LIT,M400,Direct materials,BUD,3099105.72
+Jan-26,MY-LIT,M400,Direct materials,ACT,3073871.10
+Jan-26,MY-LIT,R500,Repairs and maintenance,BUD,1313636.36
+Jan-26,MY-LIT,R500,Repairs and maintenance,ACT,1295566.78
+Jan-26,MY-LIT,S600,Contract services,BUD,540727.25
+Jan-26,MY-LIT,S600,Contract services,ACT,535757.75
+Jan-26,MY-ETC,P100,Staff costs,BUD,2978365.59
+Jan-26,MY-ETC,P100,Staff costs,ACT,2963272.10
+Jan-26,MY-ETC,D200,Depreciation - equipment,BUD,5038038.70
+Jan-26,MY-ETC,D200,Depreciation - equipment,ACT,4993650.79
+Jan-26,MY-ETC,U300,Utilities,BUD,482069.67
+Jan-26,MY-ETC,U300,Utilities,ACT,483114.52
+Jan-26,MY-ETC,M400,Direct materials,BUD,2527323.33
+Jan-26,MY-ETC,M400,Direct materials,ACT,2566271.43
+Jan-26,MY-ETC,R500,Repairs and maintenance,BUD,1109237.75
+Jan-26,MY-ETC,R500,Repairs and maintenance,ACT,1123944.38
+Jan-26,MY-ETC,S600,Contract services,BUD,397315.72
+Jan-26,MY-ETC,S600,Contract services,ACT,404120.29
+Jan-26,MY-DIF,P100,Staff costs,BUD,2668853.82
+Jan-26,MY-DIF,P100,Staff costs,ACT,2663156.91
+Jan-26,MY-DIF,D200,Depreciation - equipment,BUD,3961986.39
+Jan-26,MY-DIF,D200,Depreciation - equipment,ACT,3892606.23
+Jan-26,MY-DIF,U300,Utilities,BUD,543275.82
+Jan-26,MY-DIF,U300,Utilities,ACT,536919.14
+Jan-26,MY-DIF,M400,Direct materials,BUD,2053341.34
+Jan-26,MY-DIF,M400,Direct materials,ACT,2046610.66
+Jan-26,MY-DIF,R500,Repairs and maintenance,BUD,874213.06
+Jan-26,MY-DIF,R500,Repairs and maintenance,ACT,878681.14
+Jan-26,MY-DIF,S600,Contract services,BUD,366127.62
+Jan-26,MY-DIF,S600,Contract services,ACT,370147.76
+Jan-26,MY-FAC,P100,Staff costs,BUD,1756414.45
+Jan-26,MY-FAC,P100,Staff costs,ACT,1732740.95
+Jan-26,MY-FAC,D200,Depreciation - equipment,BUD,2192670.07
+Jan-26,MY-FAC,D200,Depreciation - equipment,ACT,2203148.22
+Jan-26,MY-FAC,U300,Utilities,BUD,2635232.96
+Jan-26,MY-FAC,U300,Utilities,ACT,2628023.53
+Jan-26,MY-FAC,M400,Direct materials,BUD,223722.91
+Jan-26,MY-FAC,M400,Direct materials,ACT,222588.26
+Jan-26,MY-FAC,R500,Repairs and maintenance,BUD,664968.11
+Jan-26,MY-FAC,R500,Repairs and maintenance,ACT,656845.59
+Jan-26,MY-FAC,S600,Contract services,BUD,873910.34
+Jan-26,MY-FAC,S600,Contract services,ACT,875890.98
+Feb-26,MY-LIT,P100,Staff costs,BUD,3996551.62
+Feb-26,MY-LIT,P100,Staff costs,ACT,3929267.07
+Feb-26,MY-LIT,D200,Depreciation - equipment,BUD,8230107.69
+Feb-26,MY-LIT,D200,Depreciation - equipment,ACT,8383539.07
+Feb-26,MY-LIT,U300,Utilities,BUD,630651.86
+Feb-26,MY-LIT,U300,Utilities,ACT,631174.93
+Feb-26,MY-LIT,M400,Direct materials,BUD,3247266.91
+Feb-26,MY-LIT,M400,Direct materials,ACT,3164175.45
+Feb-26,MY-LIT,R500,Repairs and maintenance,BUD,1370877.34
+Feb-26,MY-LIT,R500,Repairs and maintenance,ACT,1364258.08
+Feb-26,MY-LIT,S600,Contract services,BUD,542233.70
+Feb-26,MY-LIT,S600,Contract services,ACT,533950.82
+Feb-26,MY-ETC,P100,Staff costs,BUD,3007761.81
+Feb-26,MY-ETC,P100,Staff costs,ACT,2949495.33
+Feb-26,MY-ETC,D200,Depreciation - equipment,BUD,4906531.62
+Feb-26,MY-ETC,D200,Depreciation - equipment,ACT,4972220.40
+Feb-26,MY-ETC,U300,Utilities,BUD,484139.63
+Feb-26,MY-ETC,U300,Utilities,ACT,478875.03
+Feb-26,MY-ETC,M400,Direct materials,BUD,2477829.11
+Feb-26,MY-ETC,M400,Direct materials,ACT,2458721.59
+Feb-26,MY-ETC,R500,Repairs and maintenance,BUD,1136008.24
+Feb-26,MY-ETC,R500,Repairs and maintenance,ACT,1131128.62
+Feb-26,MY-ETC,S600,Contract services,BUD,405275.18
+Feb-26,MY-ETC,S600,Contract services,ACT,398379.78
+Feb-26,MY-DIF,P100,Staff costs,BUD,2646905.32
+Feb-26,MY-DIF,P100,Staff costs,ACT,2660763.94
+Feb-26,MY-DIF,D200,Depreciation - equipment,BUD,3980041.67
+Feb-26,MY-DIF,D200,Depreciation - equipment,ACT,4013022.81
+Feb-26,MY-DIF,U300,Utilities,BUD,544113.56
+Feb-26,MY-DIF,U300,Utilities,ACT,538158.41
+Feb-26,MY-DIF,M400,Direct materials,BUD,1981980.60
+Feb-26,MY-DIF,M400,Direct materials,ACT,1954466.80
+Feb-26,MY-DIF,R500,Repairs and maintenance,BUD,909059.08
+Feb-26,MY-DIF,R500,Repairs and maintenance,ACT,895508.79
+Feb-26,MY-DIF,S600,Contract services,BUD,366885.51
+Feb-26,MY-DIF,S600,Contract services,ACT,360162.68
+Feb-26,MY-FAC,P100,Staff costs,BUD,1836138.22
+Feb-26,MY-FAC,P100,Staff costs,ACT,1862934.29
+Feb-26,MY-FAC,D200,Depreciation - equipment,BUD,2323215.96
+Feb-26,MY-FAC,D200,Depreciation - equipment,ACT,2287218.40
+Feb-26,MY-FAC,U300,Utilities,BUD,2741749.05
+Feb-26,MY-FAC,U300,Utilities,ACT,2698237.36
+Feb-26,MY-FAC,M400,Direct materials,BUD,230557.49
+Feb-26,MY-FAC,M400,Direct materials,ACT,229222.00
+Feb-26,MY-FAC,R500,Repairs and maintenance,BUD,695820.13
+Feb-26,MY-FAC,R500,Repairs and maintenance,ACT,692669.85
+Feb-26,MY-FAC,S600,Contract services,BUD,907629.72
+Feb-26,MY-FAC,S600,Contract services,ACT,915093.88
+Mar-26,MY-LIT,P100,Staff costs,BUD,3940893.30
+Mar-26,MY-LIT,P100,Staff costs,ACT,3941811.02
+Mar-26,MY-LIT,D200,Depreciation - equipment,BUD,8182530.65
+Mar-26,MY-LIT,D200,Depreciation - equipment,ACT,8279595.63
+Mar-26,MY-LIT,U300,Utilities,BUD,611345.29
+Mar-26,MY-LIT,U300,Utilities,ACT,617561.68
+Mar-26,MY-LIT,M400,Direct materials,BUD,3155008.44
+Mar-26,MY-LIT,M400,Direct materials,ACT,3142863.64
+Mar-26,MY-LIT,R500,Repairs and maintenance,BUD,1341509.70
+Mar-26,MY-LIT,R500,Repairs and maintenance,ACT,1345411.19
+Mar-26,MY-LIT,S600,Contract services,BUD,540004.99
+Mar-26,MY-LIT,S600,Contract services,ACT,534308.94
+Mar-26,MY-ETC,P100,Staff costs,BUD,2903436.79
+Mar-26,MY-ETC,P100,Staff costs,ACT,2869772.04
+Mar-26,MY-ETC,D200,Depreciation - equipment,BUD,4942281.16
+Mar-26,MY-ETC,D200,Depreciation - equipment,ACT,4856691.97
+Mar-26,MY-ETC,U300,Utilities,BUD,498977.19
+Mar-26,MY-ETC,U300,Utilities,ACT,506869.85
+Mar-26,MY-ETC,M400,Direct materials,BUD,2383420.48
+Mar-26,MY-ETC,M400,Direct materials,ACT,2402084.62
+Mar-26,MY-ETC,R500,Repairs and maintenance,BUD,1082088.59
+Mar-26,MY-ETC,R500,Repairs and maintenance,ACT,1069540.16
+Mar-26,MY-ETC,S600,Contract services,BUD,387395.62
+Mar-26,MY-ETC,S600,Contract services,ACT,380360.31
+Mar-26,MY-DIF,P100,Staff costs,BUD,2627628.84
+Mar-26,MY-DIF,P100,Staff costs,ACT,2679119.09
+Mar-26,MY-DIF,D200,Depreciation - equipment,BUD,3904155.35
+Mar-26,MY-DIF,D200,Depreciation - equipment,ACT,3917181.70
+Mar-26,MY-DIF,U300,Utilities,BUD,517647.47
+Mar-26,MY-DIF,U300,Utilities,ACT,529350.42
+Mar-26,MY-DIF,M400,Direct materials,BUD,1974632.83
+Mar-26,MY-DIF,M400,Direct materials,ACT,1977353.90
+Mar-26,MY-DIF,R500,Repairs and maintenance,BUD,880429.57
+Mar-26,MY-DIF,R500,Repairs and maintenance,ACT,882525.12
+Mar-26,MY-DIF,S600,Contract services,BUD,362911.39
+Mar-26,MY-DIF,S600,Contract services,ACT,366493.64
+Mar-26,MY-FAC,P100,Staff costs,BUD,1779633.43
+Mar-26,MY-FAC,P100,Staff costs,ACT,1794158.86
+Mar-26,MY-FAC,D200,Depreciation - equipment,BUD,2239602.54
+Mar-26,MY-FAC,D200,Depreciation - equipment,ACT,2280427.03
+Mar-26,MY-FAC,U300,Utilities,BUD,2644968.55
+Mar-26,MY-FAC,U300,Utilities,ACT,2621642.36
+Mar-26,MY-FAC,M400,Direct materials,BUD,215972.55
+Mar-26,MY-FAC,M400,Direct materials,ACT,220029.63
+Mar-26,MY-FAC,R500,Repairs and maintenance,BUD,674493.87
+Mar-26,MY-FAC,R500,Repairs and maintenance,ACT,674770.85
+Mar-26,MY-FAC,S600,Contract services,BUD,863689.52
+Mar-26,MY-FAC,S600,Contract services,ACT,851656.53
+Apr-26,MY-LIT,P100,Staff costs,BUD,4058095.41
+Apr-26,MY-LIT,P100,Staff costs,ACT,4039759.66
+Apr-26,MY-LIT,D200,Depreciation - equipment,BUD,8135037.30
+Apr-26,MY-LIT,D200,Depreciation - equipment,ACT,8102581.42
+Apr-26,MY-LIT,U300,Utilities,BUD,634464.60
+Apr-26,MY-LIT,U300,Utilities,ACT,639884.53
+Apr-26,MY-LIT,M400,Direct materials,BUD,3174928.87
+Apr-26,MY-LIT,M400,Direct materials,ACT,3184837.64
+Apr-26,MY-LIT,R500,Repairs and maintenance,BUD,1331200.11
+Apr-26,MY-LIT,R500,Repairs and maintenance,ACT,1337770.70
+Apr-26,MY-LIT,S600,Contract services,BUD,556506.81
+Apr-26,MY-LIT,S600,Contract services,ACT,562391.67
+Apr-26,MY-ETC,P100,Staff costs,BUD,2973769.71
+Apr-26,MY-ETC,P100,Staff costs,ACT,2956236.00
+Apr-26,MY-ETC,D200,Depreciation - equipment,BUD,5104753.17
+Apr-26,MY-ETC,D200,Depreciation - equipment,ACT,5099870.06
+Apr-26,MY-ETC,U300,Utilities,BUD,514186.84
+Apr-26,MY-ETC,U300,Utilities,ACT,502440.73
+Apr-26,MY-ETC,M400,Direct materials,BUD,2499414.93
+Apr-26,MY-ETC,M400,Direct materials,ACT,2428415.04
+Apr-26,MY-ETC,R500,Repairs and maintenance,BUD,1159504.93
+Apr-26,MY-ETC,R500,Repairs and maintenance,ACT,1168248.71
+Apr-26,MY-ETC,S600,Contract services,BUD,411959.60
+Apr-26,MY-ETC,S600,Contract services,ACT,411272.10
+Apr-26,MY-DIF,P100,Staff costs,BUD,2726396.21
+Apr-26,MY-DIF,P100,Staff costs,ACT,2778041.06
+Apr-26,MY-DIF,D200,Depreciation - equipment,BUD,4175100.69
+Apr-26,MY-DIF,D200,Depreciation - equipment,ACT,4243883.21
+Apr-26,MY-DIF,U300,Utilities,BUD,534341.70
+Apr-26,MY-DIF,U300,Utilities,ACT,533427.84
+Apr-26,MY-DIF,M400,Direct materials,BUD,1999930.99
+Apr-26,MY-DIF,M400,Direct materials,ACT,1974984.53
+Apr-26,MY-DIF,R500,Repairs and maintenance,BUD,905942.09
+Apr-26,MY-DIF,R500,Repairs and maintenance,ACT,913446.85
+Apr-26,MY-DIF,S600,Contract services,BUD,357616.24
+Apr-26,MY-DIF,S600,Contract services,ACT,364549.52
+Apr-26,MY-FAC,P100,Staff costs,BUD,1778000.81
+Apr-26,MY-FAC,P100,Staff costs,ACT,1773242.85
+Apr-26,MY-FAC,D200,Depreciation - equipment,BUD,2232558.01
+Apr-26,MY-FAC,D200,Depreciation - equipment,ACT,2277189.28
+Apr-26,MY-FAC,U300,Utilities,BUD,2747069.20
+Apr-26,MY-FAC,U300,Utilities,ACT,2776499.84
+Apr-26,MY-FAC,M400,Direct materials,BUD,231407.61
+Apr-26,MY-FAC,M400,Direct materials,ACT,227872.04
+Apr-26,MY-FAC,R500,Repairs and maintenance,BUD,687405.46
+Apr-26,MY-FAC,R500,Repairs and maintenance,ACT,674463.14
+Apr-26,MY-FAC,S600,Contract services,BUD,885839.62
+Apr-26,MY-FAC,S600,Contract services,ACT,888212.52
+May-26,MY-LIT,P100,Staff costs,BUD,3930706.52
+May-26,MY-LIT,P100,Staff costs,ACT,3984254.82
+May-26,MY-LIT,D200,Depreciation - equipment,BUD,8068066.21
+May-26,MY-LIT,D200,Depreciation - equipment,ACT,8104505.39
+May-26,MY-LIT,U300,Utilities,BUD,616211.93
+May-26,MY-LIT,U300,Utilities,ACT,618030.93
+May-26,MY-LIT,M400,Direct materials,BUD,3074495.13
+May-26,MY-LIT,M400,Direct materials,ACT,3111252.84
+May-26,MY-LIT,R500,Repairs and maintenance,BUD,1320697.57
+May-26,MY-LIT,R500,Repairs and maintenance,ACT,1299079.31
+May-26,MY-LIT,S600,Contract services,BUD,524967.73
+May-26,MY-LIT,S600,Contract services,ACT,522285.16
+May-26,MY-ETC,P100,Staff costs,BUD,2961732.05
+May-26,MY-ETC,P100,Staff costs,ACT,2981062.61
+May-26,MY-ETC,D200,Depreciation - equipment,BUD,4875440.42
+May-26,MY-ETC,D200,Depreciation - equipment,ACT,4912347.22
+May-26,MY-ETC,U300,Utilities,BUD,492156.39
+May-26,MY-ETC,U300,Utilities,ACT,493433.10
+May-26,MY-ETC,M400,Direct materials,BUD,2469571.45
+May-26,MY-ETC,M400,Direct materials,ACT,2473333.28
+May-26,MY-ETC,R500,Repairs and maintenance,BUD,1118619.15
+May-26,MY-ETC,R500,Repairs and maintenance,ACT,1136137.25
+May-26,MY-ETC,S600,Contract services,BUD,392021.45
+May-26,MY-ETC,S600,Contract services,ACT,384270.33
+May-26,MY-DIF,P100,Staff costs,BUD,2655694.88
+May-26,MY-DIF,P100,Staff costs,ACT,2645351.30
+May-26,MY-DIF,D200,Depreciation - equipment,BUD,3934684.13
+May-26,MY-DIF,D200,Depreciation - equipment,ACT,3857592.81
+May-26,MY-DIF,U300,Utilities,BUD,523427.60
+May-26,MY-DIF,U300,Utilities,ACT,517609.30
+May-26,MY-DIF,M400,Direct materials,BUD,2051512.57
+May-26,MY-DIF,M400,Direct materials,ACT,2051164.44
+May-26,MY-DIF,R500,Repairs and maintenance,BUD,885789.62
+May-26,MY-DIF,R500,Repairs and maintenance,ACT,880465.28
+May-26,MY-DIF,S600,Contract services,BUD,359337.70
+May-26,MY-DIF,S600,Contract services,ACT,363841.10
+May-26,MY-FAC,P100,Staff costs,BUD,1734758.64
+May-26,MY-FAC,P100,Staff costs,ACT,1760516.37
+May-26,MY-FAC,D200,Depreciation - equipment,BUD,2225368.06
+May-26,MY-FAC,D200,Depreciation - equipment,ACT,2256664.87
+May-26,MY-FAC,U300,Utilities,BUD,2682167.39
+May-26,MY-FAC,U300,Utilities,ACT,2712487.98
+May-26,MY-FAC,M400,Direct materials,BUD,218157.84
+May-26,MY-FAC,M400,Direct materials,ACT,216515.51
+May-26,MY-FAC,R500,Repairs and maintenance,BUD,657470.76
+May-26,MY-FAC,R500,Repairs and maintenance,ACT,660777.50
+May-26,MY-FAC,S600,Contract services,BUD,894905.34
+May-26,MY-FAC,S600,Contract services,ACT,903980.42
+Jun-26,MY-LIT,P100,Staff costs,BUD,4108703.08
+Jun-26,MY-LIT,P100,Staff costs,ACT,4142748.21
+Jun-26,MY-LIT,D200,Depreciation - equipment,BUD,8035998.43
+Jun-26,MY-LIT,D200,Depreciation - equipment,ACT,8142426.49
+Jun-26,MY-LIT,U300,Utilities,BUD,639354.48
+Jun-26,MY-LIT,U300,Utilities,ACT,636189.15
+Jun-26,MY-LIT,M400,Direct materials,BUD,3218864.56
+Jun-26,MY-LIT,M400,Direct materials,ACT,3215213.95
+Jun-26,MY-LIT,R500,Repairs and maintenance,BUD,1375259.89
+Jun-26,MY-LIT,R500,Repairs and maintenance,ACT,1359693.87
+Jun-26,MY-LIT,S600,Contract services,BUD,533271.25
+Jun-26,MY-LIT,S600,Contract services,ACT,539917.51
+Jun-26,MY-ETC,P100,Staff costs,BUD,2876728.26
+Jun-26,MY-ETC,P100,Staff costs,ACT,2888375.83
+Jun-26,MY-ETC,D200,Depreciation - equipment,BUD,4875642.03
+Jun-26,MY-ETC,D200,Depreciation - equipment,ACT,4857287.24
+Jun-26,MY-ETC,U300,Utilities,BUD,490478.67
+Jun-26,MY-ETC,U300,Utilities,ACT,492129.04
+Jun-26,MY-ETC,M400,Direct materials,BUD,2504347.19
+Jun-26,MY-ETC,M400,Direct materials,ACT,2546318.42
+Jun-26,MY-ETC,M400,Direct materials,ACT,2546318.42
+Jun-26,MY-ETC,R500,Repairs and maintenance,BUD,1100044.73
+Jun-26,MY-ETC,R500,Repairs and maintenance,ACT,1079659.56
+Jun-26,MY-ETC,S600,Contract services,BUD,405679.90
+Jun-26,MY-ETC,S600,Contract services,ACT,401174.82
+Jun-26,MY-DIF,P100,Staff costs,BUD,2665612.54
+Jun-26,MY-DIF,P100,Staff costs,ACT,2696285.76
+Jun-26,MY-DIF,D200,Depreciation - equipment,BUD,3982460.74
+Jun-26,MY-DIF,D200,Depreciation - equipment,ACT,3905227.19
+Jun-26,MY-DIF,U300,Utilities,BUD,523451.29
+Jun-26,MY-DIF,U300,Utilities,ACT,521389.10
+Jun-26,MY-DIF,M400,Direct materials,BUD,1975157.94
+Jun-26,MY-DIF,M400,Direct materials,ACT,1974850.16
+Jun-26,MY-DIF,R500,Repairs and maintenance,BUD,888175.40
+Jun-26,MY-DIF,R500,Repairs and maintenance,ACT,877213.61
+Jun-26,MY-DIF,S600,Contract services,BUD,359859.59
+Jun-26,MY-DIF,S600,Contract services,ACT,357781.42
+Jun-26,MY-FAC,P100,Staff costs,BUD,1790015.89
+Jun-26,MY-FAC,P100,Staff costs,ACT,1786213.68
+Jun-26,MY-FAC,D200,Depreciation - equipment,BUD,2181298.74
+Jun-26,MY-FAC,D200,Depreciation - equipment,ACT,2165834.71
+Jun-26,MY-FAC,U300,Utilities,BUD,2761270.61
+Jun-26,MY-FAC,U300,Utilities,ACT,2741638.96
+Jun-26,MY-FAC,M400,Direct materials,BUD,219253.47
+Jun-26,MY-FAC,M400,Direct materials,ACT,216019.96
+Jun-26,MY-FAC,R500,Repairs and maintenance,BUD,691479.94
+Jun-26,MY-FAC,R500,Repairs and maintenance,ACT,687678.58
+Jun-26,MY-FAC,S600,Contract services,BUD,890459.66
+Jun-26,MY-FAC,S600,Contract services,ACT,878721.24
+Jul-26,MY-LIT,P100,Staff costs,BUD,3929385.37
+Jul-26,MY-LIT,P100,Staff costs,ACT,3952508.32
+Jul-26,MY-LIT,D200,Depreciation - equipment,BUD,7992781.02
+Jul-26,MY-LIT,D200,Depreciation - equipment,ACT,7888215.64
+Jul-26,MY-LIT,U300,Utilities,BUD,616517.71
+Jul-26,MY-LIT,U300,Utilities,ACT,600577.19
+Jul-26,MY-LIT,M400,Direct materials,BUD,3148677.45
+Jul-26,MY-LIT,M400,Direct materials,ACT,2699082.77
+Jul-26,MY-LIT,R500,Repairs and maintenance,BUD,1306109.00
+Jul-26,MY-LIT,R500,Repairs and maintenance,ACT,1269012.27
+Jul-26,MY-LIT,S600,Contract services,BUD,548366.31
+Jul-26,MY-LIT,S600,Contract services,ACT,547277.54
+Jul-26,MY-ETC,P100,Staff costs,BUD,2931974.16
+Jul-26,MY-ETC,P100,Staff costs,ACT,2980496.58
+Jul-26,MY-ETC,D200,Depreciation - equipment,BUD,4812689.28
+Jul-26,MY-ETC,D200,Depreciation - equipment,ACT,4735098.32
+Jul-26,MY-ETC,U300,Utilities,BUD,489770.19
+Jul-26,MY-ETC,U300,Utilities,ACT,470311.92
+Jul-26,MY-ETC,M400,Direct materials,BUD,2408361.70
+Jul-26,MY-ETC,M400,Direct materials,ACT,2060210.27
+Jul-26,MY-ETC,R500,Repairs and maintenance,BUD,1126887.92
+Jul-26,MY-ETC,R500,Repairs and maintenance,ACT,1079889.05
+Jul-26,MY-ETC,S600,Contract services,BUD,411700.15
+Jul-26,MY-ETC,S600,Contract services,ACT,408405.12
+Jul-26,MY-DIF,P100,Staff costs,BUD,2684480.23
+Jul-26,MY-DIF,P100,Staff costs,ACT,2709570.08
+Jul-26,MY-DIF,D200,Depreciation - equipment,BUD,3983022.76
+Jul-26,MY-DIF,D200,Depreciation - equipment,ACT,3955897.76
+Jul-26,MY-DIF,U300,Utilities,BUD,552186.65
+Jul-26,MY-DIF,U300,Utilities,ACT,531744.47
+Jul-26,MY-DIF,M400,Direct materials,BUD,1955827.34
+Jul-26,MY-DIF,M400,Direct materials,ACT,1719506.80
+Jul-26,MY-DIF,R500,Repairs and maintenance,BUD,902821.64
+Jul-26,MY-DIF,R500,Repairs and maintenance,ACT,867101.85
+Jul-26,MY-DIF,S600,Contract services,BUD,357439.25
+Jul-26,MY-DIF,S600,Contract services,ACT,360779.47
+Jul-26,MY-FAC,P100,Staff costs,BUD,1788518.54
+Jul-26,MY-FAC,P100,Staff costs,ACT,1784427.11
+Jul-26,MY-FAC,D200,Depreciation - equipment,BUD,2194390.38
+Jul-26,MY-FAC,D200,Depreciation - equipment,ACT,2214670.60
+Jul-26,MY-FAC,U300,Utilities,BUD,2641940.66
+Jul-26,MY-FAC,U300,Utilities,ACT,2550263.58
+Jul-26,MY-FAC,M400,Direct materials,BUD,217754.47
+Jul-26,MY-FAC,M400,Direct materials,ACT,187815.56
+Jul-26,MY-FAC,R500,Repairs and maintenance,BUD,667501.77
+Jul-26,MY-FAC,R500,Repairs and maintenance,ACT,639359.84
+Jul-26,MY-FAC,S600,Contract services,BUD,920113.36
+Jul-26,MY-FAC,S600,Contract services,ACT,929787.61
+Aug-26,MY-LIT,P100,Staff costs,BUD,3983243.45
+Aug-26,MY-LIT,P100,Staff costs,ACT,3964345.99
+Aug-26,MY-LIT,D200,Depreciation - equipment,BUD,7979642.15
+Aug-26,MY-LIT,D200,Depreciation - equipment,ACT,8095802.51
+Aug-26,MY-LIT,U300,Utilities,BUD,643899.73
+Aug-26,MY-LIT,U300,Utilities,ACT,615354.95
+Aug-26,MY-LIT,M400,Direct materials,BUD,3175247.08
+Aug-26,MY-LIT,M400,Direct materials,ACT,2795980.69
+Aug-26,MY-LIT,R500,Repairs and maintenance,BUD,1384809.27
+Aug-26,MY-LIT,R500,Repairs and maintenance,ACT,1352081.11
+Aug-26,MY-LIT,S600,Contract services,BUD,552598.31
+Aug-26,MY-LIT,S600,Contract services,ACT,553509.62
+Aug-26,MY-ETC,P100,Staff costs,BUD,2904551.75
+Aug-26,MY-ETC,P100,Staff costs,ACT,2848419.08
+Aug-26,MY-ETC,D200,Depreciation - equipment,BUD,5005318.15
+Aug-26,MY-ETC,D200,Depreciation - equipment,ACT,5049724.59
+Aug-26,MY-ETC,U300,Utilities,BUD,494357.19
+Aug-26,MY-ETC,U300,Utilities,ACT,480504.68
+Aug-26,MY-ETC,M400,Direct materials,BUD,2450490.93
+Aug-26,MY-ETC,M400,Direct materials,ACT,2156764.99
+Aug-26,MY-ETC,R500,Repairs and maintenance,BUD,1134053.83
+Aug-26,MY-ETC,R500,Repairs and maintenance,ACT,1091739.76
+Aug-26,MY-ETC,S600,Contract services,BUD,399138.22
+Aug-26,MY-ETC,S600,Contract services,ACT,405753.76
+Aug-26,MY-DIF,P100,Staff costs,BUD,2640491.15
+Aug-26,MY-DIF,P100,Staff costs,ACT,2692178.29
+Aug-26,MY-DIF,D200,Depreciation - equipment,BUD,4058883.96
+Aug-26,MY-DIF,D200,Depreciation - equipment,ACT,4056212.46
+Aug-26,MY-DIF,U300,Utilities,BUD,536456.58
+Aug-26,MY-DIF,U300,Utilities,ACT,517239.65
+Aug-26,MY-DIF,M400,Direct materials,BUD,2014037.30
+Aug-26,MY-DIF,M400,Direct materials,ACT,1749274.65
+Aug-26,MY-DIF,R500,Repairs and maintenance,BUD,880702.81
+Aug-26,MY-DIF,R500,Repairs and maintenance,ACT,871311.89
+Aug-26,MY-DIF,S600,Contract services,BUD,363767.55
+Aug-26,MY-DIF,S600,Contract services,ACT,369366.80
+Aug-26,MY-FAC,P100,Staff costs,BUD,1786776.30
+Aug-26,MY-FAC,P100,Staff costs,ACT,1768877.83
+Aug-26,MY-FAC,D200,Depreciation - equipment,BUD,2195623.69
+Aug-26,MY-FAC,D200,Depreciation - equipment,ACT,2181547.90
+Aug-26,MY-FAC,U300,Utilities,BUD,2682662.55
+Aug-26,MY-FAC,U300,Utilities,ACT,2558143.13
+Aug-26,MY-FAC,M400,Direct materials,BUD,228501.27
+Aug-26,MY-FAC,M400,Direct materials,ACT,199191.83
+Aug-26,MY-FAC,R500,Repairs and maintenance,BUD,678619.36
+Aug-26,MY-FAC,R500,Repairs and maintenance,ACT,667759.98
+Aug-26,MY-FAC,S600,Contract services,BUD,894284.40
+Aug-26,MY-FAC,S600,Contract services,ACT,904479.73
+Sep-26,MY-LIT,P100,Staff costs,BUD,4072933.40
+Sep-26,MY-LIT,P100,Staff costs,ACT,4134999.64
+Sep-26,MY-LIT,D200,Depreciation - equipment,BUD,7980305.25
+Sep-26,MY-LIT,D200,Depreciation - equipment,ACT,7932879.43
+Sep-26,MY-LIT,U300,Utilities,BUD,607828.02
+Sep-26,MY-LIT,U300,Utilities,ACT,575520.74
+Sep-26,MY-LIT,M400,Direct materials,BUD,3093841.85
+Sep-26,MY-LIT,M400,Direct materials,ACT,2646341.59
+Sep-26,MY-LIT,R500,Repairs and maintenance,BUD,1339419.11
+Sep-26,MY-LIT,R500,Repairs and maintenance,ACT,1325818.33
+Sep-26,MY-LIT,S600,Contract services,BUD,533653.02
+Sep-26,MY-LIT,S600,Contract services,ACT,544100.76
+Sep-26,MY-ETC,P100,Staff costs,BUD,2901388.74
+Sep-26,MY-ETC,P100,Staff costs,ACT,2894523.69
+Sep-26,MY-ETC,D200,Depreciation - equipment,BUD,4871470.41
+Sep-26,MY-ETC,D200,Depreciation - equipment,ACT,4937903.51
+Sep-26,MY-ETC,U300,Utilities,BUD,501495.50
+Sep-26,MY-ETC,U300,Utilities,ACT,484481.35
+Sep-26,MY-ETC,M400,Direct materials,BUD,2418109.64
+Sep-26,MY-ETC,M400,Direct materials,ACT,2086955.10
+Sep-26,MY-ETC,R500,Repairs and maintenance,BUD,1125235.12
+Sep-26,MY-ETC,R500,Repairs and maintenance,ACT,1081920.69
+Sep-26,MY-ETC,S600,Contract services,BUD,400939.19
+Sep-26,MY-ETC,S600,Contract services,ACT,408664.27
+Sep-26,MY-DIF,P100,Staff costs,BUD,2683603.60
+Sep-26,MY-DIF,P100,Staff costs,ACT,2681922.94
+Sep-26,MY-DIF,D200,Depreciation - equipment,BUD,3940673.82
+Sep-26,MY-DIF,D200,Depreciation - equipment,ACT,3984906.05
+Sep-26,MY-DIF,U300,Utilities,BUD,525696.70
+Sep-26,MY-DIF,U300,Utilities,ACT,510558.52
+Sep-26,MY-DIF,M400,Direct materials,BUD,1993891.24
+Sep-26,MY-DIF,M400,Direct materials,ACT,1707988.25
+Sep-26,MY-DIF,R500,Repairs and maintenance,BUD,873671.76
+Sep-26,MY-DIF,R500,Repairs and maintenance,ACT,853522.74
+Sep-26,MY-DIF,S600,Contract services,BUD,360909.45
+Sep-26,MY-DIF,S600,Contract services,ACT,357635.33
+Sep-26,MY-FAC,P100,Staff costs,BUD,1748186.71
+Sep-26,MY-FAC,P100,Staff costs,ACT,1745522.86
+Sep-26,MY-FAC,D200,Depreciation - equipment,BUD,2162073.82
+Sep-26,MY-FAC,D200,Depreciation - equipment,ACT,2149736.97
+Sep-26,MY-FAC,U300,Utilities,BUD,2589816.37
+Sep-26,MY-FAC,U300,Utilities,ACT,2475018.87
+Sep-26,MY-FAC,M400,Direct materials,BUD,225143.66
+Sep-26,MY-FAC,M400,Direct materials,ACT,199006.19
+Sep-26,MY-FAC,R500,Repairs and maintenance,BUD,675776.96
+Sep-26,MY-FAC,R500,Repairs and maintenance,ACT,646116.75
+Sep-26,MY-FAC,S600,Contract services,BUD,901202.99
+Sep-26,MY-FAC,S600,Contract services,ACT,899022.25

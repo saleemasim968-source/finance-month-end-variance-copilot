@@ -1,0 +1,13 @@
+site,local_cost_centre,group_area
+FAB_NORTH,CC1010,Lithography
+FAB_NORTH,CC1020,Etch
+FAB_NORTH,CC1030,Diffusion
+FAB_NORTH,CC1900,Facilities
+FAB_ALPS,KST-210,Lithography
+FAB_ALPS,KST-220,Etch
+FAB_ALPS,KST-230,Diffusion
+FAB_ALPS,KST-900,Facilities
+FAB_ASIA,MY-LIT,Lithography
+FAB_ASIA,MY-ETC,Etch
+FAB_ASIA,MY-DIF,Diffusion
+FAB_ASIA,MY-FAC,Facilities
