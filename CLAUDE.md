@@ -189,4 +189,4 @@ SC-1 100% rows mapped · SC-2 reconciliation < 0.01% · SC-3 2/2 data issues fou
 
 ## Open questions
 
-See `docs/log_entries_for_07.md` for unresolved ambiguities. Don't guess an answer to any item marked OPEN there.
+The design decisions D-009 to D-022 and changes C-001 to C-004 in `docs/log_entries_for_07.md` are approved and override doc 04 where they differ (e.g. `source_line_plan`/`source_line_actual` instead of `source_row`). Only I-001 (missing generator) is still open. Don't guess an answer to any item marked OPEN.

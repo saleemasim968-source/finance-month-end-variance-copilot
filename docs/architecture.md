@@ -2,13 +2,13 @@
 
 | | |
 |---|---|
-| Status | **Draft for PM review** (WBS 1.2, planning) |
+| Status | **Approved by PM, 10 Oct 2026** (WBS 1.2). C-001 and C-003 await sponsor sign-off (simulated) |
 | Date | 10 October 2026 |
 | Based on | Documents 01–08, version 1.0 |
 
 Independent portfolio project. All data is synthetic and all stakeholders are assumed role personas. This is not a document of any real company and contains no internal or confidential information.
 
-This document describes *how* the product is built. *What* it must do is defined in documents 04 (scope, business rules) and 05 (requirements). Where this document fills a gap in those documents, it references the open item (A-xx) in `docs/log_entries_for_07.md`. Those items are **proposals until the project manager approves them**.
+This document describes *how* the product is built. *What* it must do is defined in documents 04 (scope, business rules) and 05 (requirements). Where this document fills a gap in those documents, it references the open item (A-xx) in `docs/log_entries_for_07.md`. All A-xx items were approved by the PM on 10 Oct 2026 (D-014 to D-022, C-001 to C-004).
 
 ---
 
@@ -147,7 +147,7 @@ The **mapping gate** runs before `rpt_harmonised` is built. It anti-joins stagin
 | `an_volume_flags` | site × period | plan_wafers, actual_wafers, volume_ratio, volume_flag |
 | `an_cost_per_wafer` | site × period | cpw_plan, cpw_actual, complete (false if any actual is missing) |
 
-For the row with a missing actual: total_var, spend_effect and spend_flag are NULL; volume_effect is still calculated (A-05, open).
+For the row with a missing actual: total_var, spend_effect and spend_flag are NULL; volume_effect is still calculated (C-003).
 
 ## 6. Commentary design (WBS 5)
 
