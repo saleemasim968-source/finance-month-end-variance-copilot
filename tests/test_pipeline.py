@@ -7,7 +7,6 @@ that WP 3 delivers: FR-01 to FR-06, NFR-02 and NFR-03.
 import csv
 import re
 import shutil
-import time
 from decimal import Decimal
 
 import duckdb
@@ -22,16 +21,6 @@ SITE_DELIMITERS = {
     "data/raw/fab_alps_kosten.csv": ";",
     "data/raw/fab_asia_gl_export.csv": ",",
 }
-
-
-@pytest.fixture(scope="module")
-def warehouse(tmp_path_factory):
-    db_path = tmp_path_factory.mktemp("warehouse") / "variance.duckdb"
-    start = time.perf_counter()
-    pipeline.run(db_path=db_path)
-    elapsed = time.perf_counter() - start
-    with duckdb.connect(str(db_path), read_only=True) as con:
-        yield con, elapsed
 
 
 def query(con, sql):

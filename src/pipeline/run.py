@@ -2,7 +2,8 @@
 
 Deletes the warehouse and rebuilds it from the raw files, so every run starts from the
 same state and gives the same result:
-raw load -> staging -> mapping gate -> harmonised table -> data-quality report -> reconciliation.
+raw load -> staging -> mapping gate -> harmonised table -> data-quality report -> reconciliation
+-> variance analytics.
 
 Usage: python -m src.pipeline.run
 """
@@ -14,6 +15,7 @@ from pathlib import Path
 import duckdb
 import yaml
 
+from src.analytics import variance
 from src.pipeline import ingest, quality
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -43,6 +45,7 @@ def run(root=ROOT, db_path=None):
         run_sql_folder(con, "reporting")
         quality.build_reports(con, config["reconciliation_tolerance_pct"])
         quality.check_reconciliation(con)
+        flags = variance.run(con, config["materiality"])
 
         findings = dict(con.execute("SELECT finding, COUNT(*) FROM dq_report GROUP BY finding").fetchall())
         return {
@@ -51,6 +54,7 @@ def run(root=ROOT, db_path=None):
             "harmonised_rows": con.execute("SELECT COUNT(*) FROM rpt_harmonised").fetchone()[0],
             "findings": findings,
             "reconciliation_checks": con.execute("SELECT COUNT(*) FROM dq_reconciliation").fetchone()[0],
+            **flags,
         }
 
 
@@ -69,6 +73,8 @@ def main():
     for finding, count in sorted(summary["findings"].items()):
         print(f"Data-quality finding:     {count:>4}  {finding}")
     print(f"Reconciliation checks:    {summary['reconciliation_checks']:>4}  all passed")
+    print(f"Spend flags:              {summary['spend_flags']:>4}")
+    print(f"Volume flags:             {summary['volume_flags']:>4}")
     print(f"Warehouse:                {summary['db_path'].relative_to(ROOT)}")
     print(f"Run time:                 {time.perf_counter() - start:.2f} s")
 

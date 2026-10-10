@@ -29,6 +29,8 @@ Status: OPEN = waiting for an answer · PROPOSED = the assistant's suggestion ·
 | D-029 | 10 Oct | Amounts are fixed-point decimals (cents), not floating point. FAB_ASIA lines are converted to EUR and rounded to cents per line, before plan and actual are combined. | Floating-point sums can differ between runs (NFR-02). Rounding per line keeps the reconciliation exact. | PM (approved 10 Oct) |
 | D-030 | 10 Oct | The exact-duplicate rule is applied to all three site files, not only FAB_ASIA. A missing FX rate, an unknown Version value, a malformed period or a wrong number of fields stops the run with the file and line named. | Doc 04 §4.2 says "a source file"; failing loudly is safer than dropping data (R03). | PM (approved 10 Oct) |
 | D-031 | 10 Oct | The reconciliation's "source total" is the sum of every source line in EUR, taken from the line-level staging tables (one row per raw line, duplicates included; a test checks the row counts match). It proves no amount is lost or added by de-duplication, pivoting and mapping. It does **not** independently re-check the currency and TEUR conversion; separate tests compare converted values against the raw files instead. | Honest statement of what the check covers. | PM (approved 10 Oct) |
+| D-032 | 10 Oct | WP 4 adds `an_flagged_items`: one row per item needing commentary, with a stable `item_id` (e.g. `spend\|FAB_NORTH\|2026-05\|Lithography\|Maintenance`). The review store uses this key, so approvals reattach after a rebuild. | Links WP 4 to WP 5 (A-18). | AI assistant (PM delegated, 10 Oct) |
+| D-033 | 10 Oct | Analytics run inside `src/pipeline/run.py` after the reconciliation; results are written back to DuckDB. Calculations use floating point; the identity checks use a tolerance of 1e-6 EUR. | One command (NFR-02); pandas per doc 03 §10. | AI assistant (PM delegated, 10 Oct) |
 | D-022 | 10 Oct | Join mappings on the local code only. `local_account_name` is informational and is taken from the generator output. (A-15) | Local names are not specified in any document. | PM (approved 10 Oct) |
 
 ## Change log
@@ -77,6 +79,10 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | NFR-03 | Verified | `test_nfr03_every_row_points_to_its_source_lines` opens each source file at the recorded line for all 648 rows | 10 Oct (WP 3) |
 | NFR-02 | Built | Pipeline: 0.53 s and identical results on two runs. Full verification (clean run of the whole product) in WP 7.1 | 10 Oct (WP 3) |
 | NFR-06 | Built (SQL part) | All transformations are SQL; mappings are tables. KNIME part in WP 7.2 | 10 Oct (WP 3) |
+| FR-07 | Verified | `test_fr07_total_variance_is_actual_minus_plan` | 10 Oct (WP 4) |
+| FR-08 | Verified | volume + spend = total on all 647 posted rows (C-003); hand-calculated unit test | 10 Oct (WP 4) |
+| FR-09 | Verified | exactly the 3 planted spend events and 3 volume events (SC-4); thresholds in `config.yaml` | 10 Oct (WP 4) |
+| FR-10 | Verified | cost per wafer equals total cost / wafers for all 27 site-periods | 10 Oct (WP 4) |
 
 ## Milestone status entries
 
@@ -84,3 +90,4 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 |---|---|---|---|---|---|---|
 | M1 Documentation baselined | Sat 16:30 | Sat 10 Oct | Green | Green | Green | Docs 01–08 plus architecture baselined and approved |
 | M2 Harmonised table reconciled | Sat 20:00 | Sat 10 Oct | Green | Green | Green | 648 rows, 54/54 reconciliation checks at EUR 0.00 difference, both planted data issues reported, 32 tests passing |
+| M3 Variance engine tested | Sun 11:00 | Sat 10 Oct | Green | Green | Green | 3 + 3 flags exactly on the planted events; 44 tests passing |

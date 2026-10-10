@@ -57,3 +57,28 @@ Each stage is one Git commit. The hash is shown in `git log --oneline`.
 **Quality gate:** passed. 54/54 reconciliation checks at EUR 0.00 difference; both planted data issues reported; 32/32 tests. Deleting a harmonised row on purpose made the reconciliation stop the run.
 **Requirements:** FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, NFR-03 verified; NFR-02 and NFR-06 built.
 **Milestone:** M2, green.
+
+---
+
+## Stage 3: WP 4, variance analytics (WBS 4.1–4.3), 10 Oct
+
+From here on, the PM asked for the whole build to be completed in one go, with every stage logged here for later review.
+
+**Built**
+| File | Purpose |
+|---|---|
+| `src/analytics/variance.py` | Flexed budget, total variance, volume and spend effect, spend and volume flags, cost per wafer, list of flagged items |
+| `src/analytics/__init__.py` | Package marker |
+| `config.yaml` | New `materiality` section (EUR 50,000 and 5 %, 5 % volume) |
+| `src/pipeline/run.py` | Now runs analytics as the last step and prints the flag counts |
+| `tests/conftest.py` | One shared pipeline run for all tests |
+| `tests/test_variance.py` | WP 4 quality gate, 12 tests (3 on a hand-calculated example, 9 on the real data) |
+
+**Decided:** D-032 (flagged-items table with a stable key), D-033 (analytics inside the one-command run).
+**Results:**
+- Spend flags: NORTH May Lithography Maintenance (+EUR 477k, +156.9 %); ALPS Jul and Aug Facilities Energy (+EUR 106k / +21.8 %, +EUR 115k / +23.7 %).
+- Volume flags: ASIA Jul, Aug, Sep (about −14.5 %).
+- ALPS Sep cost per wafer marked incomplete (missing actual).
+**Quality gate:** passed. volume + spend = total on all 647 posted rows (largest difference 0.0); exactly the three planted events flagged; 44/44 tests.
+**Requirements:** FR-07, FR-08, FR-09, FR-10 verified. SC-4 met.
+**Milestone:** M3, green.
