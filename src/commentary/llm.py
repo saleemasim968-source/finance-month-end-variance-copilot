@@ -49,6 +49,19 @@ class Draft:
     error: str | None = None
 
 
+def load_env_file(path=None):
+    """Read KEY=VALUE lines from .env into the environment (existing variables win)."""
+    from pathlib import Path
+    path = Path(path or Path(__file__).resolve().parents[2] / ".env")
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
 def provider():
     choice = os.environ.get("LLM_PROVIDER", "auto").lower()
     if choice == "auto":

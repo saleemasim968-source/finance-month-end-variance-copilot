@@ -35,6 +35,8 @@ Status: OPEN = waiting for an answer · PROPOSED = the assistant's suggestion ·
 | D-035 | 10 Oct | Context and number check: amounts in whole EUR thousands, percentages with one decimal. Volume items also get wafer counts and cost per wafer. The local codes of the item are in the context and ignored by the check, like period labels. A number passes if its absolute value equals a context figure or a number in the owner's cause. | Makes doc 04 §4.5 precise. | AI assistant (PM delegated, 10 Oct) |
 | D-036 | 10 Oct | New file `src/commentary/run.py` drafts all flagged items. The one-command pipeline run calls it at the end for items without commentary. | Doc 04 §7 lists no orchestrator; SC-6 asks for one command up to the dashboard data. | AI assistant (PM delegated, 10 Oct) |
 | D-037 | 10 Oct | Review rules: edit only while Draft (every edit re-checked); approve only a Draft that passes the check; an approved text is locked until reopened; regeneration never overwrites an approved text. | No unchecked figure can be released (SC-5, D-008). | AI assistant (PM delegated, 10 Oct) |
+| D-038 | 10 Oct | Dashboard rules: variance views use posted rows only, so plan + volume + spend = actual holds; the not-posted row is named on the overview. The bridge starts at zero (volume effect, spend effect per cost type, total variance) because a bridge drawn from EUR 266m hides every effect. Colours follow the validated dataviz palette: sites have fixed colours, red/blue diverging for above/below plan, status always with a label. | Every dashboard figure must equal the variance table (doc 03 §7) and be readable. | AI assistant (PM delegated, 10 Oct) |
+| D-039 | 10 Oct | The frontend has a "Rebuild data" button that runs the pipeline. One lock serialises all data access in the backend (single-user prototype). Views can be linked with `#overview`, `#sites`, `#bridge`, `#flags`, `#quality`, and `?theme=dark`. | Demo convenience; safe concurrent access to DuckDB. | AI assistant (PM delegated, 10 Oct) |
 | D-022 | 10 Oct | Join mappings on the local code only. `local_account_name` is informational and is taken from the generator output. (A-15) | Local names are not specified in any document. | PM (approved 10 Oct) |
 
 ## Change log
@@ -45,6 +47,7 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | C-001 | 10 Oct | Harmonised table: replace `source_row` with `source_line_plan` and `source_line_actual`. (A-01) | Scope: none; it makes NFR-03 achievable for FAB_ASIA, where plan and actual are separate lines. Schedule: none. Risk: lowers R03. | Approved by PM 10 Oct; **sponsor sign-off needed** (concerns how Must NFR-03 is met) | 04 §4.1 |
 | C-002 | 10 Oct | Reconcile plan and actual **separately** per site and period. (A-02) | Stricter than doc 04 §4.2; no schedule impact. | Approved by PM 10 Oct | 04 §4.2 |
 | C-003 | 10 Oct | Missing actual: actual_eur, total variance and spend effect stay NULL; the volume effect is still calculated; the FR-08 test covers **posted** rows only; actual cost per wafer is marked "incomplete" where an actual is missing. (A-05) | Changes the FR-08 verification wording ("every row" → "every posted row"). | Approved by PM 10 Oct; **sponsor sign-off needed** (verification of Must FR-08) | 04 §4.2–4.3, 05 FR-08 |
+| C-005 | 10 Oct | Replace the Streamlit dashboard (doc 03 §10; FR-15 planned in `app/dashboard.py`) with a separate backend and frontend: a FastAPI JSON API (`app/backend/`) and a plain HTML/JavaScript/Plotly.js frontend (`app/frontend/`). | Requested by the PM ("create frontend and backend to show my prototype"). Scope: FR-15 content unchanged, all five views delivered. Schedule: built within WP 6. Risk: R08 (demo failure) is handled by serving Plotly.js locally, so no internet is needed. | Requested and approved by PM, 10 Oct. FR-15 is a "Must", so **sponsor sign-off (simulated) needed** for the change of technology | 03 §10, 04 §7, 05 FR-15 location |
 | C-004 | 10 Oct | Repository additions: `config.yaml` (thresholds, A-08), `docs/architecture.md`, `docs/log_entries_for_07.md`, `CLAUDE.md`, `data/review/`, `logs/`. | None on scope; makes the "configuration values" in doc 04 §4.4 concrete. | Approved by PM 10 Oct | 04 §7 |
 
 ## Issue log
@@ -95,6 +98,9 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | FR-16 | Verified | German template drafts pass the number check for all 6 items | 10 Oct (WP 5) |
 | NFR-04 | Verified | Context contains no row-level lineage; every prompt, answer and check result is in `logs/llm_log.jsonl` | 10 Oct (WP 5) |
 | NFR-05 | Verified | Without a key the template is used and passes the number check | 10 Oct (WP 5) |
+| FR-15 | Verified | Walk-through of all five views (screenshots); five values spot-checked by automated tests, plus the sums behind every view compared with the variance table | 10 Oct (WP 6) |
+| FR-14 | Verified | Cause entered through the frontend/API appears in the regenerated draft | 10 Oct (WP 6) |
+| NFR-08 | Built | Notice on every screen of the frontend (test). README part in WP 7.3 | 10 Oct (WP 6) |
 
 ## Milestone status entries
 
@@ -104,3 +110,4 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | M2 Harmonised table reconciled | Sat 20:00 | Sat 10 Oct | Green | Green | Green | 648 rows, 54/54 reconciliation checks at EUR 0.00 difference, both planted data issues reported, 32 tests passing |
 | M3 Variance engine tested | Sun 11:00 | Sat 10 Oct | Green | Green | Green | 3 + 3 flags exactly on the planted events; 44 tests passing |
 | M4 Commentary with number check | Sun 13:30 | Sat 10 Oct | Green | Green | Amber | Number check, retry, fallback and review all tested; live Claude path not yet run (no API key, I-005) |
+| M5 Dashboard complete | Sun 16:30 | Sat 10 Oct | Green | Amber | Green | Backend + frontend instead of Streamlit (C-005, needs sponsor sign-off); 80 tests passing |

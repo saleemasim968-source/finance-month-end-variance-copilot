@@ -73,6 +73,8 @@ def run(root=ROOT, db_path=None, review_path=None, log_path=None, draft_commenta
 
 
 def main():
+    from src.commentary.llm import load_env_file
+    load_env_file()
     start = time.perf_counter()
     try:
         summary = run()

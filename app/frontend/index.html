@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Variance Copilot</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/vendor/plotly.min.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Month-End Variance Copilot</h1>
+      <p class="subtitle">Plan versus actual for three wafer fabs · January to September 2026</p>
+    </div>
+    <div class="topbar-actions">
+      <span class="meta-chip" id="writer-chip" title="Who drafts the commentary">Commentary: …</span>
+      <span class="meta-chip" id="refreshed-chip">Data: …</span>
+      <button class="btn" id="rebuild-btn" title="Rebuild all data from the raw site files">Rebuild data</button>
+      <button class="btn btn-ghost" id="theme-btn" aria-label="Switch light or dark theme">Theme</button>
+    </div>
+  </header>
+
+  <div class="notice" role="note">
+    <strong>Synthetic data.</strong> <span id="notice-text">Independent portfolio project. All data is synthetic, and all sites and stakeholders are fictional.</span>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" class="tab" data-tab="overview" aria-selected="true">Overview</button>
+    <button role="tab" class="tab" data-tab="sites" aria-selected="false">Site comparison</button>
+    <button role="tab" class="tab" data-tab="bridge" aria-selected="false">Variance bridge</button>
+    <button role="tab" class="tab" data-tab="flags" aria-selected="false">Flagged items <span class="count" id="flag-count"></span></button>
+    <button role="tab" class="tab" data-tab="quality" aria-selected="false">Data quality</button>
+  </nav>
+
+  <div class="filters" id="filters">
+    <label>Period
+      <select id="period-select"><option value="all">All months</option></select>
+    </label>
+    <label id="site-filter" hidden>Site
+      <select id="site-select"><option value="all">All sites</option></select>
+    </label>
+    <span class="filter-hint" id="filter-hint"></span>
+  </div>
+
+  <main>
+    <!-- Overview -->
+    <section class="view" id="view-overview" role="tabpanel">
+      <div class="tiles" id="kpi-tiles"></div>
+      <p class="footnote" id="not-posted-note"></p>
+      <div class="card">
+        <div class="card-head">
+          <h2>Monthly variance: volume effect and spend effect</h2>
+          <p>Positive = cost above plan (unfavourable). The volume effect is cost that moved with wafer output; the spend effect is cost above or below the flexed budget.</p>
+        </div>
+        <div class="chart" id="chart-monthly"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Sites</h2></div>
+        <div class="table-wrap"><table id="table-sites"></table></div>
+      </div>
+    </section>
+
+    <!-- Site comparison -->
+    <section class="view" id="view-sites" role="tabpanel" hidden>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h2>Cost per wafer: plan and actual</h2>
+            <p>EUR per wafer for the selected period.</p>
+          </div>
+          <div class="chart" id="chart-cpw"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h2>Actual cost per wafer by month</h2>
+            <p>All months; the selected month is marked.</p>
+          </div>
+          <div class="chart" id="chart-cpw-trend"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Variance as % of plan, by site and cost type</h2>
+          <p>Red = cost above plan, blue = below plan, grey = on plan.</p>
+        </div>
+        <div class="chart chart-short" id="chart-heatmap"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Cost per wafer table</h2></div>
+        <div class="table-wrap"><table id="table-cpw"></table></div>
+      </div>
+    </section>
+
+    <!-- Variance bridge -->
+    <section class="view" id="view-bridge" role="tabpanel" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2 id="bridge-title">Variance bridge</h2>
+          <p id="bridge-sub">From plan to actual: the volume effect first, then the spend effect for each cost type.</p>
+        </div>
+        <div class="chart chart-tall" id="chart-bridge"></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Variance table</h2>
+          <p>Every row of the selection, largest variance first, with the source file and line it came from.</p>
+        </div>
+        <div class="table-wrap table-scroll"><table id="table-rows"></table></div>
+      </div>
+    </section>
+
+    <!-- Flagged items -->
+    <section class="view" id="view-flags" role="tabpanel" hidden>
+      <p class="intro">Material variances need a reviewed explanation. A draft is written from the calculated figures only. Every number in it is checked against the data, and a controller approves it. Cost-centre owners can add the cause.</p>
+      <div id="flag-list"></div>
+    </section>
+
+    <!-- Data quality -->
+    <section class="view" id="view-quality" role="tabpanel" hidden>
+      <div class="tiles" id="dq-tiles"></div>
+      <div class="card">
+        <div class="card-head"><h2>Findings</h2><p>Problems found in the source files and how they were treated.</p></div>
+        <div class="table-wrap"><table id="table-findings"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Reconciliation</h2>
+          <p>Per site, month and measure: source total = harmonised total + logged corrections, within 0.01 %.</p>
+        </div>
+        <div class="table-wrap table-scroll"><table id="table-recon"></table></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -77,6 +77,8 @@ def draft_all(warehouse_path, review_path, log_path, language="en", regenerate=F
 
 
 def main():
+    from src.commentary.llm import load_env_file
+    load_env_file()
     from src.pipeline.run import load_config
 
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

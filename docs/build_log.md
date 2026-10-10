@@ -104,3 +104,26 @@ From here on, the PM asked for the whole build to be completed in one go, with e
 **Quality gate:** passed. All 6 drafts pass the number check. A fake model that invents numbers is rejected, retried once with feedback, then replaced by the template; all three steps are logged. A text with an invented number cannot be approved. 65/65 tests.
 **Requirements:** FR-11, FR-12, FR-13, FR-14, FR-16, NFR-04, NFR-05 verified. SC-5 met.
 **Milestone:** M4, amber (live Claude call not yet exercised).
+
+---
+
+## Stage 5: WP 6, backend and frontend (WBS 6), 10 Oct
+
+The PM asked for a frontend and a backend to show the prototype. This replaces the Streamlit dashboard in the plan (change C-005).
+
+**Built**
+| File | Purpose |
+|---|---|
+| `app/backend/main.py` | FastAPI app: JSON API for every view, review actions, pipeline rebuild; serves the frontend and a local copy of Plotly.js |
+| `app/backend/queries.py` | Read-only SQL behind each view; sums over the selection only, no recalculation |
+| `app/backend/__main__.py` | `python -m app.backend`: loads `.env`, builds data if missing, starts the server |
+| `app/frontend/index.html`, `styles.css`, `app.js` | Single-page frontend: Overview, Site comparison, Variance bridge, Flagged items (edit / regenerate EN-DE / approve / reopen / owner cause), Data quality; light and dark theme; synthetic-data notice on every screen |
+| `.env.example` | Where to put an optional `ANTHROPIC_API_KEY` |
+| `src/commentary/llm.py` | New `load_env_file()` |
+| `tests/test_dashboard.py` | WP 6 quality gate, 15 tests through the real API |
+
+**Checked by eye:** screenshots of every view in light mode, dark mode and narrow width. Three fixes came out of that: the site filter showing on the wrong tab, an unreadable bridge drawn from zero, and the chart grid overflowing on phones.
+**Decided:** C-005 (needs sponsor sign-off), D-038, D-039.
+**Quality gate:** passed. Five named spot checks plus every chart's sums equal the variance table; the bridge closes from plan to actual for every site; review workflow works end to end through the API; 80/80 tests.
+**Requirements:** FR-15 and FR-14 verified; NFR-08 built (README part in WP 7).
+**Milestone:** M5, scope amber only because C-005 awaits sponsor sign-off.
