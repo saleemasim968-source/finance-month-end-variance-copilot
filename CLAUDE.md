@@ -196,3 +196,4 @@ The design decisions D-009 to D-022 and changes C-001 to C-004 in `docs/log_entr
 - Set up: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
 - Regenerate data: `.venv/bin/python src/generate_data.py`. The output must equal the committed files; a test checks this.
 - Tests (quality gates): `.venv/bin/python -m pytest -v`
+- Run the pipeline: `.venv/bin/python -m src.pipeline.run` (rebuilds `data/warehouse/variance.duckdb`)

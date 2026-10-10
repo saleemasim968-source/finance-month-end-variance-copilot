@@ -1,0 +1,59 @@
+# Build log
+
+A record of each stage of the build, written as it happened. For every stage it lists what was built, which files changed, what was decided, the quality gate result and the requirement status. Decisions and changes are also collected for document 07 in `docs/log_entries_for_07.md`; this log points to them by ID.
+
+Each stage is one Git commit. The hash is shown in `git log --oneline`.
+
+---
+
+## Stage 0: Planning (WBS 1.1, 1.2), 10 Oct
+
+**Built**
+- Converted documents 01–08 to markdown (`docs/md/`).
+- `CLAUDE.md`: build rules and a summary of the specification.
+- `docs/architecture.md`: layers, data model, storage, commentary controls, test strategy.
+- `docs/log_entries_for_07.md`: proposed decisions, issues and open questions.
+- Git repository and public GitHub repo `finance-month-end-variance-copilot`; folder skeleton per doc 04 §7; minimal README with the synthetic-data notice.
+
+**Decided:** D-009 to D-022 and C-001 to C-004, all approved by the PM.
+**Found:** 17 ambiguities in documents 01–08 (A-01 to A-17, plus A-18 during architecture). All were resolved.
+**Milestone:** M1, green.
+
+---
+
+## Stage 1: WP 2, data foundation (WBS 2.1, 2.2), 10 Oct
+
+**Built**
+| File | Purpose |
+|---|---|
+| `src/generate_data.py` | Deterministic synthetic data generator, with the planted events and data issues (written with PM permission, D-023; now frozen) |
+| `data/raw/*.csv`, `data/reference/fx_rates.csv` | Generated input |
+| `data/reference/account_mapping.csv`, `cost_centre_mapping.csv`, `cost_behaviour.csv` | Maintained reference tables (WBS 2.2) |
+| `tests/test_data_foundation.py` | WP 2 quality gate, 17 tests |
+| `requirements.txt` | Pinned packages |
+
+**Decided:** D-023 to D-026 (approved).
+**Quality gate:** passed. Row counts are 216/216/433/27/9 and every local code is mapped. Removing a mapping on purpose made the test fail. A pre-check found exactly 3 spend flags and 3 volume flags (A-13).
+**Requirements:** NFR-01 verified; FR-04 built.
+
+---
+
+## Stage 2: WP 3, ELT pipeline (WBS 3.1–3.4), 10 Oct
+
+**Built**
+| File | Purpose |
+|---|---|
+| `src/pipeline/ingest.py` | Raw load: files into DuckDB unchanged, plus file and line number |
+| `src/pipeline/sql/staging/*.sql` | Per-site cleaning: periods, units, currency, duplicates, BUD/ACT pivot |
+| `src/pipeline/sql/checks/unmapped_codes.sql` | Mapping gate |
+| `src/pipeline/sql/reporting/01_harmonised.sql` | Harmonised reporting table (648 rows) |
+| `src/pipeline/sql/quality/*.sql` | Data-quality report and reconciliation |
+| `src/pipeline/quality.py` | Runs the gate and checks; stops with one clear message |
+| `src/pipeline/run.py` | One-command rebuild |
+| `config.yaml`, `pytest.ini`, `src/__init__.py`, `src/pipeline/__init__.py` | Configuration and technical glue |
+| `tests/test_pipeline.py` | WP 3 quality gate, 15 tests |
+
+**Decided:** D-027 to D-031 (approved).
+**Quality gate:** passed. 54/54 reconciliation checks at EUR 0.00 difference; both planted data issues reported; 32/32 tests. Deleting a harmonised row on purpose made the reconciliation stop the run.
+**Requirements:** FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, NFR-03 verified; NFR-02 and NFR-06 built.
+**Milestone:** M2, green.

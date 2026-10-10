@@ -1,0 +1,8 @@
+# Configuration values (doc 04 §4.4, change C-004). No secrets here; an LLM API key belongs in .env.
+# Later work packages add their own sections (materiality in WP 4, commentary in WP 5).
+
+warehouse_path: data/warehouse/variance.duckdb
+
+# Doc 04 §4.2: per site, period and measure, the source total must equal the
+# harmonised total plus logged corrections within 0.01 % (expressed as a fraction).
+reconciliation_tolerance_pct: 0.0001

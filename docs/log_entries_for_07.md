@@ -24,6 +24,11 @@ Status: OPEN = waiting for an answer · PROPOSED = the assistant's suggestion ·
 | D-024 | 10 Oct | The parentheses in doc 04 §3 describe formats, not column names: e.g. FAB_ASIA columns are `Version` (values BUD/ACT) and `Amount` (MYR); FAB_NORTH `period` holds `2026-01`. `wafer_volumes.csv` and `fx_rates.csv` use `FAB_NORTH`-style site labels and `YYYY-MM` periods. All files are UTF-8; the ALPS file contains one umlaut (`Wärme`). (A-14) | Doc 04 §3 was ambiguous. | PM (approved 10 Oct) |
 | D-025 | 10 Oct | The generator uses a fixed seed (20261010), Python standard library only, and noise bands (plan ±3 %, spend ±2 %, volume ±2.5 %) well inside the 5 % thresholds, so that only planted events can flag. | Determinism (NFR-02) and the exact 3 + 3 flag expectation in doc 04 §5. | PM (approved 10 Oct) |
 | D-026 | 10 Oct | WBS 2.1 and 2.2 were built in one step, because the quality gate in doc 03 §7 is defined for WBS 2 as a whole. | The gate needs both the generator and the mappings. | PM (approved 10 Oct) |
+| D-027 | 10 Oct | `rpt_harmonised` has an extra column `actual_posted` (true/false) next to the doc 04 §4.1 columns. | Doc 04 §4.2 says to "mark" a row whose actual is missing; a column marks it on the row itself, and WP 4 uses it to exclude the row from flags. | PM (approved 10 Oct) |
+| D-028 | 10 Oct | The SQL is split into `sql/staging`, `sql/checks` (mapping gate), `sql/reporting` and `sql/quality`, with files run in name order. `src/__init__.py`, `src/pipeline/__init__.py` and `pytest.ini` were added so modules and tests can import each other. | Doc 04 §7 names only "a sql/ folder with staging and reporting queries". | PM (approved 10 Oct) |
+| D-029 | 10 Oct | Amounts are fixed-point decimals (cents), not floating point. FAB_ASIA lines are converted to EUR and rounded to cents per line, before plan and actual are combined. | Floating-point sums can differ between runs (NFR-02). Rounding per line keeps the reconciliation exact. | PM (approved 10 Oct) |
+| D-030 | 10 Oct | The exact-duplicate rule is applied to all three site files, not only FAB_ASIA. A missing FX rate, an unknown Version value, a malformed period or a wrong number of fields stops the run with the file and line named. | Doc 04 §4.2 says "a source file"; failing loudly is safer than dropping data (R03). | PM (approved 10 Oct) |
+| D-031 | 10 Oct | The reconciliation's "source total" is the sum of every source line in EUR, taken from the line-level staging tables (one row per raw line, duplicates included; a test checks the row counts match). It proves no amount is lost or added by de-duplication, pivoting and mapping. It does **not** independently re-check the currency and TEUR conversion; separate tests compare converted values against the raw files instead. | Honest statement of what the check covers. | PM (approved 10 Oct) |
 | D-022 | 10 Oct | Join mappings on the local code only. `local_account_name` is informational and is taken from the generator output. (A-15) | Local names are not specified in any document. | PM (approved 10 Oct) |
 
 ## Change log
@@ -43,7 +48,7 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | I-001 | 10 Oct | (Resolved by D-023.) `src/generate_data.py` didn't exist in the project (or under ~/Documents), although doc 04 §3 and WBS 2.1 say it's complete. `data/raw/` and `fx_rates.csv` are missing as well. This blocks the WP 2 quality gate and all of WP 3. | The PM gave permission to create it; written in WP 2. | Closed 10 Oct |
 | I-002 | 10 Oct | The project folder was not a Git repository (doc 03 §10). | `git init`; public repo created and first commit pushed. | Closed 10 Oct |
 | I-003 | 10 Oct | The .docx files were in the project root, not in `docs/`. | Copied to `docs/`; root copies left in place and gitignored. PM may delete them. | Closed 10 Oct |
-| I-004 | 10 Oct | Local Python is 3.14.7 (compliant with "3.11 or later"). The pinned DuckDB, Streamlit and pandas versions must support it. | Check at the start of WP 3; fall back to a 3.12 venv if needed. | Open (WP 3) |
+| I-004 | 10 Oct | Local Python is 3.14.7 (compliant with "3.11 or later"). The pinned DuckDB, Streamlit and pandas versions must support it. | DuckDB 1.5.6 and PyYAML 6.0.3 install and run on 3.14; Streamlit and pandas are checked in WP 4/6. | Closed for WP 3 |
 
 ## Items to verify once the generator exists
 
@@ -62,10 +67,20 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | ID | New status | Evidence | Date |
 |---|---|---|---|
 | NFR-01 | Verified | `tests/test_data_foundation.py::test_no_person_level_data`; review of all column headers; data is generated synthetic data only | 10 Oct (WP 2) |
-| FR-04 | Built (mapping tables only) | `data/reference/*.csv`; coverage test passes, and fails when a mapping is removed. The "unknown code stops the run" test belongs to WP 3.3. | 10 Oct (WP 2) |
+| FR-04 | Built (mapping tables only), superseded below | `data/reference/*.csv`; coverage test passes, and fails when a mapping is removed. The "unknown code stops the run" test belongs to WP 3.3. | 10 Oct (WP 2) |
+| FR-01 | Verified | `test_fr01_raw_tables_have_one_row_per_file_line` | 10 Oct (WP 3) |
+| FR-02 | Verified | `test_fr02_nine_periods_per_site_in_yyyy_mm` | 10 Oct (WP 3) |
+| FR-03 | Verified | 54 of 54 reconciliation checks pass with a difference of EUR 0.00; TEUR and MYR conversion tests | 10 Oct (WP 3) |
+| FR-04 | Verified | 648 of 648 rows mapped (SC-1); `test_fr04_unknown_codes_stop_the_run_and_are_all_reported` | 10 Oct (WP 3) |
+| FR-05 | Verified | `test_fr05_local_codes_are_kept_on_every_row` | 10 Oct (WP 3) |
+| FR-06 | Verified | Exactly one duplicate and one missing actual reported (SC-3); duplicate logged as a correction | 10 Oct (WP 3) |
+| NFR-03 | Verified | `test_nfr03_every_row_points_to_its_source_lines` opens each source file at the recorded line for all 648 rows | 10 Oct (WP 3) |
+| NFR-02 | Built | Pipeline: 0.53 s and identical results on two runs. Full verification (clean run of the whole product) in WP 7.1 | 10 Oct (WP 3) |
+| NFR-06 | Built (SQL part) | All transformations are SQL; mappings are tables. KNIME part in WP 7.2 | 10 Oct (WP 3) |
 
 ## Milestone status entries
 
 | Milestone | Planned | Actual | Schedule | Scope | Quality | Comment |
 |---|---|---|---|---|---|---|
 | M1 Documentation baselined | Sat 16:30 | Sat 10 Oct | Green | Green | Green | Docs 01–08 plus architecture baselined and approved |
+| M2 Harmonised table reconciled | Sat 20:00 | Sat 10 Oct | Green | Green | Green | 648 rows, 54/54 reconciliation checks at EUR 0.00 difference, both planted data issues reported, 32 tests passing |

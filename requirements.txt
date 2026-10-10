@@ -1,2 +1,4 @@
 # Pinned packages. Extended per work package.
+duckdb==1.5.6
+PyYAML==6.0.3
 pytest==9.1.1
