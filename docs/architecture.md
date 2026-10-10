@@ -29,7 +29,7 @@ This document describes *how* the product is built. *What* it must do is defined
 ```
            ┌──────────────────────────── one laptop, no paid infrastructure ───────────────────────────┐
            │                                                                                            │
- CSV files │  data/raw/ ──► pipeline (Python + SQL on DuckDB) ──► analytics (pandas) ──► commentary  ──►│ Streamlit
+ CSV files │  data/raw/ ──► pipeline (Python + SQL on DuckDB) ──► analytics (pandas) ──► commentary  ──►│ web app
  (synthetic)│  data/reference/                                                         │      ▲        │ dashboard
            │                                                                           │      │        │ (controller,
            │                                                       aggregated figures ▼      │ text    │  cost-centre
@@ -71,7 +71,7 @@ No ERP, authentication or deployment (doc 04 §2). The only external call is the
  │ every prompt, answer and check ─► logs/llm_log.jsonl                 │
  └──────────────────────────────┬───────────────────────────────────────┘
                                 ▼
- ┌─ WBS 6 DASHBOARD (Streamlit + Plotly) ───────────────────────────────┐
+ ┌─ WBS 6 BACKEND + FRONTEND (FastAPI + HTML/Plotly.js, C-005) ─────────┐
  │ Overview · Site comparison · Variance waterfall · Flagged items with │
  │ commentary and approval · Data quality      "SYNTHETIC DATA" banner  │
  └──────────────────────────────────────────────────────────────────────┘
@@ -178,9 +178,9 @@ commentary:
 | Command | Does |
 |---|---|
 | `python src/generate_data.py` | Writes `data/raw/` and `fx_rates.csv` (exists; not changed) |
-| `python -m src.pipeline.run` | Deletes the warehouse, then runs ingest → staging → mapping gate → reporting → quality → analytics. Prints run time (SC-6, < 2 min) |
-| `python -m src.commentary.run` (name to confirm in WP 5) | Drafts commentary for the flagged items |
-| `streamlit run app/dashboard.py` | Dashboard |
+| `python -m src.pipeline.run` | Deletes the warehouse, then runs ingest → staging → mapping gate → reporting → quality → analytics → drafts for new flagged items. Prints run time (SC-6, < 2 min) |
+| `python -m src.commentary.run [--regenerate] [--language de]` | Drafts commentary for the flagged items (also run at the end of the pipeline for new items) |
+| `python -m app.backend` | Backend API and frontend on http://127.0.0.1:8000 (C-005) |
 | `pytest` | All tests (SC-7) |
 
 ## 9. Testing strategy
@@ -211,7 +211,7 @@ src/generate_data.py  exists, do not change
 src/pipeline/         ingest.py, quality.py, run.py, sql/
 src/analytics/        variance.py
 src/commentary/       context.py, llm.py, number_check.py, review.py
-app/dashboard.py
+app/backend/, app/frontend/   (C-005, replaces app/dashboard.py)
 tests/
 knime/
 logs/  ★              LLM log (ignored)

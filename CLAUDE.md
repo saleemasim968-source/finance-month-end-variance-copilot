@@ -45,12 +45,12 @@ data/reference/ ┴─> [3.1 raw load] ─> raw_* tables (unchanged + source_fil
                      v
                 [5 commentary/] context.py -> llm.py (API or template) -> number_check.py -> review.py
                      v                                     (all prompts, answers, checks logged)
-                [6 app/dashboard.py, Streamlit + Plotly]
+                [6 app/backend (FastAPI API) + app/frontend (HTML, Plotly.js), C-005]
 ```
 
 Orchestrated by `src/pipeline/run.py`: one command, empty DB to results in under 2 minutes, deterministic (NFR-02).
 
-Stack (doc 03 §10): Python ≥ 3.11, DuckDB, SQL transformations, pandas, Streamlit + Plotly, pytest, KNIME (harmonisation rebuild). The LLM provider and model are set through env vars, and a template fallback runs without a key. LLM spend cap: EUR 5.
+Stack (doc 03 §10): Python ≥ 3.11, DuckDB, SQL transformations, pandas, FastAPI + HTML/Plotly.js frontend (C-005 replaces Streamlit), pytest, KNIME (harmonisation rebuild). The LLM provider and model are set through env vars, and a template fallback runs without a key. LLM spend cap: EUR 5.
 
 ## Repository structure (doc 04 §7)
 
@@ -63,7 +63,7 @@ Stack (doc 03 §10): Python ≥ 3.11, DuckDB, SQL transformations, pandas, Strea
 | `src/pipeline/` | `ingest.py`, `quality.py`, `run.py`, `sql/` (staging + reporting) |
 | `src/analytics/variance.py` | Variance, flags, cost per wafer |
 | `src/commentary/` | `context.py`, `llm.py`, `number_check.py`, `review.py` |
-| `app/dashboard.py` | Streamlit dashboard |
+| `app/backend/`, `app/frontend/` | Backend API and web frontend (C-005) |
 | `tests/` | pytest |
 | `knime/` | KNIME workflow export |
 | `README.md`, `requirements.txt` | Setup, pinned packages |
@@ -196,4 +196,7 @@ The design decisions D-009 to D-022 and changes C-001 to C-004 in `docs/log_entr
 - Set up: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
 - Regenerate data: `.venv/bin/python src/generate_data.py`. The output must equal the committed files; a test checks this.
 - Tests (quality gates): `.venv/bin/python -m pytest -v`
-- Run the pipeline: `.venv/bin/python -m src.pipeline.run` (rebuilds `data/warehouse/variance.duckdb`)
+- Run the pipeline: `.venv/bin/python -m src.pipeline.run` (rebuilds `data/warehouse/variance.duckdb`, drafts commentary for new flagged items)
+- Start the app: `.venv/bin/python -m app.backend` → http://127.0.0.1:8000
+- Redraft commentary: `.venv/bin/python -m src.commentary.run --regenerate [--language de]`
+- KNIME parity: `.venv/bin/python knime/check_parity.py`

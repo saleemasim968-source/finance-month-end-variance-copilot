@@ -127,3 +127,26 @@ The PM asked for a frontend and a backend to show the prototype. This replaces t
 **Quality gate:** passed. Five named spot checks plus every chart's sums equal the variance table; the bridge closes from plan to actual for every site; review workflow works end to end through the API; 80/80 tests.
 **Requirements:** FR-15 and FR-14 verified; NFR-08 built (README part in WP 7).
 **Milestone:** M5, scope amber only because C-005 awaits sponsor sign-off.
+
+---
+
+## Stage 6: WP 7, validation and transfer (WBS 7.1–7.4), and closing draft (WBS 1.4), 10 Oct
+
+**Built**
+| File | Purpose |
+|---|---|
+| `docs/evidence/run_log.txt` | Clean run from an empty database with one command: 0.91 s |
+| `docs/evidence/test_report.txt` | Full test run: 84 of 84 passed |
+| `tests/test_handover.py` | KNIME parity checker, expected totals, synthetic notice in all handover documents, business-case arithmetic |
+| `knime/README.md`, `knime/check_parity.py`, `knime/expected_harmonised_totals.csv` | KNIME build guide, automatic parity check, expected totals (D-040) |
+| `README.md` | Full README: what, quick start, views, method, controls, results, limits |
+| `docs/demo_script.md` | Three-minute demo with fallback |
+| `docs/business_case.md` | One-page business case with estimates and assumptions (BR-01) |
+| `docs/closing_report_draft.md` | Draft of document 08 filled in from the results |
+| `docs/screenshots/*.png` | All five views plus dark mode (also the demo fallback, R08) |
+| `docs/architecture.md`, `CLAUDE.md` | Updated for C-005 and the new commands |
+
+**Decided:** D-040 (KNIME as guide plus parity check), D-041 (handover documents).
+**Quality gate:** passed. All tests pass (84/84); a clean run from an empty database works with one command (0.91 s).
+**Requirements:** NFR-02, NFR-07, NFR-08 verified. BR-01 and NFR-06 built and waiting on the PM. **Totals: Must 20/21, Should 2/3, Could 1/1 verified.**
+**Milestone:** M6 open. Waiting on PM review, sponsor sign-offs (C-001, C-003, C-005), a demo rehearsal, the KNIME build and one live model run.

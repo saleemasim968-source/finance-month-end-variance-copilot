@@ -37,6 +37,8 @@ Status: OPEN = waiting for an answer · PROPOSED = the assistant's suggestion ·
 | D-037 | 10 Oct | Review rules: edit only while Draft (every edit re-checked); approve only a Draft that passes the check; an approved text is locked until reopened; regeneration never overwrites an approved text. | No unchecked figure can be released (SC-5, D-008). | AI assistant (PM delegated, 10 Oct) |
 | D-038 | 10 Oct | Dashboard rules: variance views use posted rows only, so plan + volume + spend = actual holds; the not-posted row is named on the overview. The bridge starts at zero (volume effect, spend effect per cost type, total variance) because a bridge drawn from EUR 266m hides every effect. Colours follow the validated dataviz palette: sites have fixed colours, red/blue diverging for above/below plan, status always with a label. | Every dashboard figure must equal the variance table (doc 03 §7) and be readable. | AI assistant (PM delegated, 10 Oct) |
 | D-039 | 10 Oct | The frontend has a "Rebuild data" button that runs the pipeline. One lock serialises all data access in the backend (single-user prototype). Views can be linked with `#overview`, `#sites`, `#bridge`, `#flags`, `#quality`, and `?theme=dark`. | Demo convenience; safe concurrent access to DuckDB. | AI assistant (PM delegated, 10 Oct) |
+| D-040 | 10 Oct | KNIME (WBS 7.2) is delivered as a node-by-node build guide (`knime/README.md`) plus an automatic parity check (`knime/check_parity.py`) against the SQL pipeline's totals, not as a workflow file. | KNIME is not installed on the build machine, and a hand-written .knwf could not be tested. NFR-06 (Should) stays "Built" until the PM builds the workflow and the check passes. | AI assistant (PM delegated, 10 Oct) |
+| D-041 | 10 Oct | Added documents: `docs/business_case.md` (BR-01), `docs/demo_script.md`, `docs/closing_report_draft.md` (for doc 08), `docs/build_log.md`, `docs/screenshots/`, `docs/evidence/` (run log and test report). | Handover evidence (doc 03 §7, WBS 7; doc 08). | AI assistant (PM delegated, 10 Oct) |
 | D-022 | 10 Oct | Join mappings on the local code only. `local_account_name` is informational and is taken from the generator output. (A-15) | Local names are not specified in any document. | PM (approved 10 Oct) |
 
 ## Change log
@@ -101,6 +103,13 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | FR-15 | Verified | Walk-through of all five views (screenshots); five values spot-checked by automated tests, plus the sums behind every view compared with the variance table | 10 Oct (WP 6) |
 | FR-14 | Verified | Cause entered through the frontend/API appears in the regenerated draft | 10 Oct (WP 6) |
 | NFR-08 | Built | Notice on every screen of the frontend (test). README part in WP 7.3 | 10 Oct (WP 6) |
+| NFR-02 | Verified | Clean run from an empty database with one command: 0.91 s wall clock (`docs/evidence/run_log.txt`); two runs identical (test) | 10 Oct (WP 7) |
+| NFR-07 | Verified | 84 of 84 tests pass (`docs/evidence/test_report.txt`) (SC-7) | 10 Oct (WP 7) |
+| NFR-08 | Verified | Notice on every frontend screen (test) and in README, business case, demo script, KNIME guide, architecture (test) | 10 Oct (WP 7) |
+| BR-01 | Built | `docs/business_case.md` delivered; verification is the PM's review against SC-8 | 10 Oct (WP 7) |
+| NFR-06 | Built | SQL and mapping tables done; KNIME guide and parity check ready; workflow to be built by the PM (D-040) | 10 Oct (WP 7) |
+
+**Totals after WP 7:** Must 20 of 21 verified (BR-01 awaits PM review); Should 2 of 3 verified (NFR-06 built); Could 1 of 1 verified. Nothing removed.
 
 ## Milestone status entries
 
@@ -111,3 +120,4 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | M3 Variance engine tested | Sun 11:00 | Sat 10 Oct | Green | Green | Green | 3 + 3 flags exactly on the planted events; 44 tests passing |
 | M4 Commentary with number check | Sun 13:30 | Sat 10 Oct | Green | Green | Amber | Number check, retry, fallback and review all tested; live Claude path not yet run (no API key, I-005) |
 | M5 Dashboard complete | Sun 16:30 | Sat 10 Oct | Green | Amber | Green | Backend + frontend instead of Streamlit (C-005, needs sponsor sign-off); 80 tests passing |
+| M6 Project closed | Sun 19:30 | Open | Green | Amber | Green | All packages built; 84 tests; closing report drafted. Open: PM review, sponsor sign-offs, demo rehearsal, KNIME build, live model run |

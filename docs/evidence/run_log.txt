@@ -1,0 +1,24 @@
+# Clean run from an empty warehouse, 2026-10-10 14:33 CEST
+# Command: python -m src.pipeline.run   (Python 3.14.7, Darwin arm64)
+
+Raw rows loaded:
+  raw_fab_north             216
+  raw_fab_alps              216
+  raw_fab_asia              433
+  raw_wafer_volumes          27
+  raw_fx_rates                9
+  ref_account_mapping        18
+  ref_cost_centre_mapping    12
+  ref_cost_behaviour          6
+Harmonised rows:           648
+Data-quality finding:        1  actual_not_posted
+Data-quality finding:        1  duplicate_removed
+Reconciliation checks:      54  all passed
+Spend flags:                 3
+Volume flags:                3
+New commentary drafts:       0  (writer: template)
+Warehouse:                data/warehouse/variance.duckdb
+Run time:                 0.29 s
+real 0.91
+user 0.45
+sys 0.18
