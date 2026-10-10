@@ -82,3 +82,25 @@ From here on, the PM asked for the whole build to be completed in one go, with e
 **Quality gate:** passed. volume + spend = total on all 647 posted rows (largest difference 0.0); exactly the three planted events flagged; 44/44 tests.
 **Requirements:** FR-07, FR-08, FR-09, FR-10 verified. SC-4 met.
 **Milestone:** M3, green.
+
+---
+
+## Stage 4: WP 5, AI commentary (WBS 5.1–5.4), 10 Oct
+
+**Built**
+| File | Purpose |
+|---|---|
+| `src/commentary/context.py` | Builds the rounded figures for one flagged item: the only input the model gets |
+| `src/commentary/llm.py` | Claude client (official SDK) and a fixed template in English and German |
+| `src/commentary/number_check.py` | Finds every number in a text and rejects any that is not in the context |
+| `src/commentary/review.py` | Review store: Draft/Approved, reviewer role and time, edits, owner causes (`data/review/review.duckdb`) |
+| `src/commentary/run.py` | Drafts all flagged items: generate, check, retry once, fall back to the template, log, store |
+| `config.yaml` | New `commentary` section (language, store and log paths) |
+| `src/pipeline/run.py` | Now drafts commentary for new flagged items at the end of the run |
+| `tests/conftest.py` | Tests force the template writer and use temporary review and log files |
+| `tests/test_commentary.py` | WP 5 quality gate, 21 tests |
+
+**Decided:** D-034 to D-037. **Issue:** I-005 (no API key, so the live model path is untested against the real API).
+**Quality gate:** passed. All 6 drafts pass the number check. A fake model that invents numbers is rejected, retried once with feedback, then replaced by the template; all three steps are logged. A text with an invented number cannot be approved. 65/65 tests.
+**Requirements:** FR-11, FR-12, FR-13, FR-14, FR-16, NFR-04, NFR-05 verified. SC-5 met.
+**Milestone:** M4, amber (live Claude call not yet exercised).

@@ -31,6 +31,10 @@ Status: OPEN = waiting for an answer · PROPOSED = the assistant's suggestion ·
 | D-031 | 10 Oct | The reconciliation's "source total" is the sum of every source line in EUR, taken from the line-level staging tables (one row per raw line, duplicates included; a test checks the row counts match). It proves no amount is lost or added by de-duplication, pivoting and mapping. It does **not** independently re-check the currency and TEUR conversion; separate tests compare converted values against the raw files instead. | Honest statement of what the check covers. | PM (approved 10 Oct) |
 | D-032 | 10 Oct | WP 4 adds `an_flagged_items`: one row per item needing commentary, with a stable `item_id` (e.g. `spend\|FAB_NORTH\|2026-05\|Lithography\|Maintenance`). The review store uses this key, so approvals reattach after a rebuild. | Links WP 4 to WP 5 (A-18). | AI assistant (PM delegated, 10 Oct) |
 | D-033 | 10 Oct | Analytics run inside `src/pipeline/run.py` after the reconciliation; results are written back to DuckDB. Calculations use floating point; the identity checks use a tolerance of 1e-6 EUR. | One command (NFR-02); pandas per doc 03 §10. | AI assistant (PM delegated, 10 Oct) |
+| D-034 | 10 Oct | Language model: Claude through the official Anthropic SDK. Model from `LLM_MODEL` (default `claude-opus-5-5`), low effort (short texts), 20 s timeout, no automatic retries, server-side refusal fallback enabled. `LLM_PROVIDER=auto` calls the API only when `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` is set; otherwise the template is used. | Doc 03 §10 leaves the provider open. Spending money only with a deliberately set key protects the EUR 5 cap. | AI assistant (PM delegated, 10 Oct) |
+| D-035 | 10 Oct | Context and number check: amounts in whole EUR thousands, percentages with one decimal. Volume items also get wafer counts and cost per wafer. The local codes of the item are in the context and ignored by the check, like period labels. A number passes if its absolute value equals a context figure or a number in the owner's cause. | Makes doc 04 §4.5 precise. | AI assistant (PM delegated, 10 Oct) |
+| D-036 | 10 Oct | New file `src/commentary/run.py` drafts all flagged items. The one-command pipeline run calls it at the end for items without commentary. | Doc 04 §7 lists no orchestrator; SC-6 asks for one command up to the dashboard data. | AI assistant (PM delegated, 10 Oct) |
+| D-037 | 10 Oct | Review rules: edit only while Draft (every edit re-checked); approve only a Draft that passes the check; an approved text is locked until reopened; regeneration never overwrites an approved text. | No unchecked figure can be released (SC-5, D-008). | AI assistant (PM delegated, 10 Oct) |
 | D-022 | 10 Oct | Join mappings on the local code only. `local_account_name` is informational and is taken from the generator output. (A-15) | Local names are not specified in any document. | PM (approved 10 Oct) |
 
 ## Change log
@@ -51,6 +55,7 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | I-002 | 10 Oct | The project folder was not a Git repository (doc 03 §10). | `git init`; public repo created and first commit pushed. | Closed 10 Oct |
 | I-003 | 10 Oct | The .docx files were in the project root, not in `docs/`. | Copied to `docs/`; root copies left in place and gitignored. PM may delete them. | Closed 10 Oct |
 | I-004 | 10 Oct | Local Python is 3.14.7 (compliant with "3.11 or later"). The pinned DuckDB, Streamlit and pandas versions must support it. | DuckDB 1.5.6 and PyYAML 6.0.3 install and run on 3.14; Streamlit and pandas are checked in WP 4/6. | Closed for WP 3 |
+| I-005 | 10 Oct | No Anthropic API key is set on this machine, so the live Claude path has not been called. It is covered by tests with a fake model (good draft kept; invented numbers rejected, retried once, then template; errors fall back). | PM: add `ANTHROPIC_API_KEY` to `.env` and run `python -m src.commentary.run --regenerate` once to see live drafts. | Open |
 
 ## Items to verify once the generator exists
 
@@ -83,6 +88,13 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | FR-08 | Verified | volume + spend = total on all 647 posted rows (C-003); hand-calculated unit test | 10 Oct (WP 4) |
 | FR-09 | Verified | exactly the 3 planted spend events and 3 volume events (SC-4); thresholds in `config.yaml` | 10 Oct (WP 4) |
 | FR-10 | Verified | cost per wafer equals total cost / wafers for all 27 site-periods | 10 Oct (WP 4) |
+| FR-11 | Verified | Drafts reviewed for all 6 flagged items (template writer); context holds calculated figures only | 10 Oct (WP 5) |
+| FR-12 | Verified | Invented, derived and re-rounded numbers fail; correct drafts pass (SC-5) | 10 Oct (WP 5) |
+| FR-13 | Verified | Status, reviewer role and time stored and read back; edit before approval; lock after approval | 10 Oct (WP 5) |
+| FR-14 | Verified (test) | Entered cause appears in the regenerated draft. Demo in the frontend in WP 6 | 10 Oct (WP 5) |
+| FR-16 | Verified | German template drafts pass the number check for all 6 items | 10 Oct (WP 5) |
+| NFR-04 | Verified | Context contains no row-level lineage; every prompt, answer and check result is in `logs/llm_log.jsonl` | 10 Oct (WP 5) |
+| NFR-05 | Verified | Without a key the template is used and passes the number check | 10 Oct (WP 5) |
 
 ## Milestone status entries
 
@@ -91,3 +103,4 @@ Per doc 03 §5.5, changes that touch a "Must" requirement or its verification ne
 | M1 Documentation baselined | Sat 16:30 | Sat 10 Oct | Green | Green | Green | Docs 01–08 plus architecture baselined and approved |
 | M2 Harmonised table reconciled | Sat 20:00 | Sat 10 Oct | Green | Green | Green | 648 rows, 54/54 reconciliation checks at EUR 0.00 difference, both planted data issues reported, 32 tests passing |
 | M3 Variance engine tested | Sun 11:00 | Sat 10 Oct | Green | Green | Green | 3 + 3 flags exactly on the planted events; 44 tests passing |
+| M4 Commentary with number check | Sun 13:30 | Sat 10 Oct | Green | Green | Amber | Number check, retry, fallback and review all tested; live Claude path not yet run (no API key, I-005) |

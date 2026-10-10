@@ -12,3 +12,11 @@ materiality:
   spend_abs_eur: 50000   # spend flag: |spend effect| >= this amount ...
   spend_pct: 0.05        # ... and >= this share of the flexed budget
   volume_pct: 0.05       # volume flag: |actual - plan wafers| >= this share of plan
+
+# Doc 04 §4.5: AI commentary (WP 5). The writer is chosen by environment variables:
+# LLM_PROVIDER = auto | anthropic | template, LLM_MODEL (default claude-opus-5-5),
+# ANTHROPIC_API_KEY in .env (never here). Without a key the template is used (NFR-05).
+commentary:
+  language: en                         # en, or de (FR-16)
+  review_path: data/review/review.duckdb
+  log_path: logs/llm_log.jsonl

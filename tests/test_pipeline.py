@@ -92,7 +92,7 @@ def test_fr04_unknown_codes_stop_the_run_and_are_all_reported(tmp_path):
         handle.write("2026-09,CC9999,999999,Unknown account,100.00,100.00\n")
 
     with pytest.raises(UnmappedCodesError) as error:
-        pipeline.run(root=tmp_path, db_path=tmp_path / "test.duckdb")
+        pipeline.run(root=tmp_path, db_path=tmp_path / "test.duckdb", draft_commentary=False)
     message = str(error.value)
     assert "FAB_NORTH: account 999999" in message
     assert "FAB_NORTH: cost centre CC9999" in message
@@ -155,7 +155,7 @@ def test_nfr02_two_runs_give_identical_results(tmp_path):
     results = []
     for name in ("first", "second"):
         db_path = tmp_path / f"{name}.duckdb"
-        pipeline.run(db_path=db_path)
+        pipeline.run(db_path=db_path, draft_commentary=False)
         with duckdb.connect(str(db_path), read_only=True) as con:
             results.append({t: query(con, f"SELECT * FROM {t} ORDER BY ALL") for t in tables})
     assert results[0] == results[1]
