@@ -1,0 +1,23 @@
+# Duplicates of docs/*.docx kept in the root for convenience
+/*.docx
+
+# Local database and runtime output (doc 04 §7)
+data/warehouse/
+logs/
+
+# Secrets (LLM API key)
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+~$*.docx
+
+# Review state kept between runs (docs/architecture.md §4)
+data/review/
