@@ -170,3 +170,22 @@ The PM asked for a frontend that looks like a consulting solution page, opening 
 **Decided:** D-042 (consulting-style layout, own branding, no EY name, logo, colours or text).
 **Checked by eye:** full landing page and overview at desktop width. Fixed buttons that rendered white because of CSS order.
 **Tests:** 86/86.
+
+---
+
+## Stage 8: Keystone Close: name and editorial redesign, 10 Oct
+
+The PM asked for a website in the style of hebbia.com and a more professional product name.
+
+**Changed**
+| File | Change |
+|---|---|
+| `app/frontend/index.html` | Rewritten. Light header with the Keystone Close wordmark and pill tabs. Landing page: serif hero, **live grid of the six material items** (fills in cell by cell), a moving strip of the input formats, a bento grid (real raw-file lines → 648 rows; 54 reconciliation squares; a miniature variance bridge; the largest draft with every verified figure highlighted), evidence numbers, dark controls band, role switcher, before/after hours bars and table, FAQ, call to action, dark footer with project links and method notes |
+| `app/frontend/styles.css` | Rewritten. Warm paper palette, Instrument Serif and Inter with offline fallbacks, bento and grid components, reveal-on-scroll (off when the user prefers reduced motion), dark mode for everything; chart palette unchanged |
+| `app/frontend/app.js` | New `renderHome()` (everything read live from the API), role switcher, scroll reveals, page titles per tab, new footer |
+| `app/backend/main.py` | `GET /api/samples` (raw file lines as they arrive); API title "Keystone Close API" |
+| `tests/test_dashboard.py` | New test: samples equal the raw files |
+| `README.md`, `CLAUDE.md`, `docs/screenshots/*` | New name and screenshots |
+
+**Decided:** D-043 (name), D-044 (redesign, no Hebbia assets).
+**Checked by eye:** landing page at desktop and narrow width, light and dark, and every working tab. Fixed sections centring at different widths, hours bars that didn't grow, and highlight spacing in the verified draft.

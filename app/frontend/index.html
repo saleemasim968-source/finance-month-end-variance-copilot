@@ -3,41 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Variance Copilot</title>
+  <title>Keystone Close</title>
+  <meta name="description" content="Keystone Close: month-end variance intelligence. A prototype on synthetic data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/static/styles.css">
   <script src="/vendor/plotly.min.js" defer></script>
   <script src="/static/app.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <div class="notice" role="note">
     <strong>Synthetic data.</strong> <span id="notice-text">Independent portfolio project. All data is synthetic, and all sites and stakeholders are fictional.</span>
   </div>
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="wordmark" href="#home" data-goto="home" aria-label="Variance Copilot home">
-        <span class="wordmark-mark" aria-hidden="true"></span>
-        <span>Variance<strong>Copilot</strong></span>
+      <a class="wordmark" href="#home" data-goto="home" aria-label="Keystone Close home">
+        <svg class="wordmark-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 21V11a9 9 0 0 1 18 0v10h-5v-9a4 4 0 0 0-8 0v9z" fill="currentColor" opacity=".18"/>
+          <path d="M9.5 3.4h5l-1 5.6h-3z" fill="currentColor"/>
+        </svg>
+        <span>Keystone <em>Close</em></span>
       </a>
       <nav class="tabs" role="tablist" aria-label="Views">
         <button role="tab" class="tab" data-tab="home" aria-selected="true">Home</button>
         <button role="tab" class="tab" data-tab="overview" aria-selected="false">Overview</button>
-        <button role="tab" class="tab" data-tab="sites" aria-selected="false">Site comparison</button>
+        <button role="tab" class="tab" data-tab="sites" aria-selected="false">Sites</button>
         <button role="tab" class="tab" data-tab="bridge" aria-selected="false">Variance bridge</button>
-        <button role="tab" class="tab" data-tab="flags" aria-selected="false">Flagged items <span class="count" id="flag-count"></span></button>
+        <button role="tab" class="tab" data-tab="flags" aria-selected="false">Review <span class="count" id="flag-count"></span></button>
         <button role="tab" class="tab" data-tab="quality" aria-selected="false">Data quality</button>
       </nav>
       <div class="header-actions">
-        <button class="btn btn-ghost" id="theme-btn" aria-label="Switch light or dark theme">Theme</button>
-        <button class="btn btn-accent" data-goto="overview">Launch platform</button>
+        <button class="btn btn-quiet" id="theme-btn" aria-label="Switch light or dark theme">Theme</button>
+        <button class="btn btn-ink" data-goto="overview">Open platform</button>
       </div>
     </div>
   </header>
 
   <div class="app-bar" id="app-bar">
     <div>
-      <h1 class="app-title">Month-End Variance Copilot</h1>
-      <p class="subtitle">Plan versus actual for three wafer fabs · January to September 2026</p>
+      <p class="app-kicker">Keystone Close · three wafer fabs · January to September 2026</p>
+      <h1 class="app-title" id="app-title">Overview</h1>
     </div>
     <div class="topbar-actions">
       <span class="meta-chip" id="writer-chip" title="Who drafts the commentary">Commentary: …</span>
@@ -56,150 +65,167 @@
     <span class="filter-hint" id="filter-hint"></span>
   </div>
 
-  <main>
-    <!-- Home: landing page -->
+  <main id="main">
+    <!-- Home: landing page ------------------------------------------------------------------- -->
     <section class="view home" id="view-home" role="tabpanel">
+
       <div class="hero">
-        <div class="hero-inner">
-          <div class="hero-copy">
-            <p class="eyebrow">Finance data transformation · Month-end close</p>
-            <h2 class="hero-title">From three site reports to one reviewed variance story, in seconds.</h2>
-            <p class="hero-lead">Variance Copilot harmonises cost reports that arrive in different layouts, languages, units and currencies. It checks them against source, separates <em>producing less</em> from <em>spending more</em>, and drafts commentary in which every number is verified before a controller signs off.</p>
-            <div class="hero-ctas">
-              <button class="btn btn-accent btn-lg" data-goto="overview">Explore the live prototype</button>
-              <a class="btn btn-outline-light btn-lg" href="#how-it-works">See how it works</a>
-            </div>
-          </div>
-          <aside class="hero-panel" aria-label="Live results from the prototype">
-            <p class="panel-label">Live from this month-end run</p>
-            <div class="panel-stats" id="hero-stats">
-              <div><span class="stat-value">…</span><span class="stat-label">Loading</span></div>
-            </div>
-            <p class="panel-foot">Figures are read from the running pipeline, not typed into this page.</p>
-          </aside>
+        <p class="kicker reveal"><span class="pulse" aria-hidden="true"></span> Live prototype · synthetic month-end close</p>
+        <h2 class="display reveal">Month-end variance,<br><em>explained and verified.</em></h2>
+        <p class="lead reveal">Keystone Close takes cost reports from every site, whatever their layout, language, unit or currency. It reconciles them into one view, separates <strong>producing less</strong> from <strong>spending more</strong>, and drafts commentary in which every number is checked against the data before a controller signs off.</p>
+        <div class="ctas reveal">
+          <button class="btn btn-ink btn-lg" data-goto="overview">Open the platform</button>
+          <a class="btn btn-line btn-lg" href="#platform">See how it works</a>
         </div>
+
+        <figure class="matrix reveal" aria-label="The six material items of this close, read live from the platform">
+          <div class="matrix-chrome">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="matrix-title">Material items · January to September 2026</span>
+            <span class="matrix-live"><span class="pulse" aria-hidden="true"></span> live</span>
+          </div>
+          <div class="matrix-scroll">
+            <table class="matrix-table" id="hero-matrix">
+              <thead><tr><th>Item</th><th>Plan</th><th>Actual</th><th>Volume effect</th><th>Spend effect</th><th>Figures</th><th>Status</th></tr></thead>
+              <tbody><tr><td colspan="7" class="muted">Loading the latest close…</td></tr></tbody>
+            </table>
+          </div>
+          <figcaption class="matrix-foot" id="hero-stats">Reading the pipeline…</figcaption>
+        </figure>
       </div>
 
-      <div class="band">
-        <div class="band-inner">
-          <p class="eyebrow eyebrow-dark">The challenge</p>
-          <h2 class="band-title">Month-end is the most time-critical week in finance. It is also where the most manual work hides.</h2>
-          <div class="cards-3">
-            <article class="pitch-card">
-              <span class="card-index">01</span>
-              <h3>Slow close</h3>
-              <p>Every site exports its own report. Controllers re-key accounts, convert thousands and currencies, and tie out totals by hand before analysis can even start.</p>
-            </article>
-            <article class="pitch-card">
-              <span class="card-index">02</span>
-              <h3>Sites that can't be compared</h3>
-              <p>Different charts of accounts, cost-centre structures and units mean "cost per wafer" means something different at every fab.</p>
-            </article>
-            <article class="pitch-card">
-              <span class="card-index">03</span>
-              <h3>Commentary nobody can trace</h3>
-              <p>Narratives mix "we produced less" with "we spent more", and the figures in the text can't be traced back to a source line.</p>
-            </article>
-          </div>
-        </div>
+      <div class="strip" aria-label="Formats the platform reads as they arrive">
+        <p class="strip-label">Reads every site the way it reports</p>
+        <div class="marquee"><div class="marquee-track" id="format-strip"></div></div>
       </div>
 
-      <div class="band band-muted" id="how-it-works">
-        <div class="band-inner">
-          <p class="eyebrow eyebrow-dark">How it works</p>
-          <h2 class="band-title">Four steps, one command, full lineage.</h2>
-          <ol class="steps">
-            <li class="step">
-              <span class="step-no">1</span>
-              <h3>Harmonise</h3>
-              <p>Raw files load unchanged. SQL converts periods, units and currencies, and maintained mapping tables put every row on the group chart of accounts while keeping the local codes beside it.</p>
-              <button class="link-btn" data-goto="bridge">See the row-level table →</button>
-            </li>
-            <li class="step">
-              <span class="step-no">2</span>
-              <h3>Check</h3>
-              <p>Duplicates, missing actuals and unmapped codes are reported with file and line. Every site and month is reconciled to source; an unmapped code stops the run.</p>
-              <button class="link-btn" data-goto="quality">Open data quality →</button>
-            </li>
-            <li class="step">
-              <span class="step-no">3</span>
-              <h3>Analyse</h3>
-              <p>A flexed budget splits each variance into a volume effect and a spend effect. Fixed, configurable thresholds flag only what is material.</p>
-              <button class="link-btn" data-goto="overview">View the analysis →</button>
-            </li>
-            <li class="step">
-              <span class="step-no">4</span>
-              <h3>Explain</h3>
-              <p>Commentary is drafted from the calculated figures only. Any number not in the data is rejected, cost-centre owners add the cause, and a controller approves.</p>
-              <button class="link-btn" data-goto="flags">Review flagged items →</button>
-            </li>
+      <section class="section" id="platform">
+        <div class="section-head reveal">
+          <p class="eyebrow">The platform</p>
+          <h2 class="title">One command from raw exports to <em>reviewed</em> commentary.</h2>
+          <p class="sub">Four steps run in sequence. Each one leaves evidence you can open, check and trace back to a line in a source file.</p>
+        </div>
+
+        <div class="bento">
+          <article class="tile-b tile-wide reveal">
+            <div class="tile-copy">
+              <p class="step-tag">01 · Harmonise</p>
+              <h3>Three layouts in, one structure out.</h3>
+              <p>Files load unchanged. Periods, thousands, decimal commas and ringgit are converted in SQL. Maintained mapping tables put every row on the group chart of accounts, and the local codes stay beside it.</p>
+              <button class="text-link" data-goto="bridge">See every row and its source line <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="code-stack" id="sample-lines"></div>
+          </article>
+
+          <article class="tile-b reveal">
+            <p class="step-tag">02 · Check</p>
+            <h3>Reconciled to the cent.</h3>
+            <p>Duplicates, missing actuals and unmapped codes are reported with file and line. An unmapped code stops the run.</p>
+            <div class="recon-viz" id="recon-viz" aria-label="Reconciliation results"></div>
+            <button class="text-link" data-goto="quality">Open data quality <span aria-hidden="true">→</span></button>
+          </article>
+
+          <article class="tile-b reveal">
+            <p class="step-tag">03 · Analyse</p>
+            <h3>Volume or spending?</h3>
+            <p>A flexed budget splits every variance into what moved with wafer output and what was spent above it.</p>
+            <div class="mini-bridge" id="mini-bridge" aria-label="Variance bridge in miniature"></div>
+            <button class="text-link" data-goto="bridge">Open the variance bridge <span aria-hidden="true">→</span></button>
+          </article>
+
+          <article class="tile-b tile-wide tile-ink reveal">
+            <div class="tile-copy">
+              <p class="step-tag">04 · Explain</p>
+              <h3>Every figure in the draft is checked.</h3>
+              <p>The commentary is written from the calculated figures only. Any number that isn't in the data is rejected. The cost-centre owner adds the cause, and a controller approves.</p>
+              <button class="text-link" data-goto="flags">Review the drafts <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="draft-card">
+              <div class="draft-meta" id="draft-meta">Draft · checking…</div>
+              <p class="draft-text" id="draft-text"></p>
+              <p class="draft-legend"><span class="verified-swatch"></span> figure found in the data</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-tight">
+        <div class="section-head reveal">
+          <p class="eyebrow">Evidence</p>
+          <h2 class="title">Tested on a close with <em>known problems</em> planted in it.</h2>
+        </div>
+        <div class="numbers" id="proof-grid"></div>
+        <p class="fine">Measured on the synthetic data shipped with the prototype, and read live from the running system. Hours saved is an estimate from the business case, to be validated in a real close.</p>
+      </section>
+
+      <section class="section-dark">
+        <div class="section dark-inner">
+          <div class="section-head reveal">
+            <p class="eyebrow">Controls</p>
+            <h2 class="title">The model writes words.<br><em>The pipeline owns the numbers.</em></h2>
+            <p class="sub">Generative AI speeds up commentary, but finance can't accept a figure nobody can trace. These controls run on every draft, whether a language model or the built-in template wrote it.</p>
+          </div>
+          <ol class="controls">
+            <li class="reveal"><span>01</span><div><h3>Number check</h3><p>Every figure in a draft must match the calculated data. If not, the draft is rejected, rewritten once, then replaced by the template.</p></div></li>
+            <li class="reveal"><span>02</span><div><h3>Human sign-off</h3><p>Nothing is released without a controller's approval, recorded with role and time. Approved text is locked.</p></div></li>
+            <li class="reveal"><span>03</span><div><h3>Data minimisation</h3><p>Only rounded, aggregated figures for one item reach the model. There is no person-level data anywhere.</p></div></li>
+            <li class="reveal"><span>04</span><div><h3>Full lineage</h3><p>Every reported figure points to its source file and line. Every prompt, answer and check is logged.</p></div></li>
+            <li class="reveal"><span>05</span><div><h3>Works offline</h3><p>Without an AI key, a template drafts the commentary, and every other control still applies.</p></div></li>
           </ol>
         </div>
-      </div>
+      </section>
 
-      <div class="band">
-        <div class="band-inner">
-          <p class="eyebrow eyebrow-dark">Proof, not promises</p>
-          <h2 class="band-title">Tested against a month-end with known problems planted in it.</h2>
-          <div class="proof-grid" id="proof-grid"></div>
-          <p class="fine-print">Measured on the synthetic data set shipped with the prototype. Hours saved is an estimate from the <a href="https://github.com/saleemasim968-source/finance-month-end-variance-copilot/blob/main/docs/business_case.md" target="_blank" rel="noopener">business case</a>, to be validated in a real close.</p>
+      <section class="section">
+        <div class="section-head reveal">
+          <p class="eyebrow">For the people who own the close</p>
+          <h2 class="title">What changes, <em>role by role.</em></h2>
         </div>
-      </div>
-
-      <div class="band band-dark">
-        <div class="band-inner split">
-          <div>
-            <p class="eyebrow">AI you can audit</p>
-            <h2 class="band-title">The model writes words. The pipeline owns the numbers.</h2>
-            <p class="band-lead">Generative AI speeds up commentary, but finance can't accept a figure nobody can trace. Every control below runs on every draft, whether a language model or the built-in template wrote it.</p>
+        <div class="roles reveal">
+          <div class="role-tabs" role="tablist" aria-label="Roles">
+            <button role="tab" class="role-tab" aria-selected="true" data-role="0">Head of finance</button>
+            <button role="tab" class="role-tab" aria-selected="false" data-role="1">Controllers</button>
+            <button role="tab" class="role-tab" aria-selected="false" data-role="2">Site finance</button>
+            <button role="tab" class="role-tab" aria-selected="false" data-role="3">IT, audit and governance</button>
           </div>
-          <ul class="controls">
-            <li><strong>Number check.</strong> Every figure in a draft must match the calculated data, or the draft is rejected and rewritten.</li>
-            <li><strong>Human sign-off.</strong> Nothing is released without a controller's approval, recorded with role and time.</li>
-            <li><strong>Data minimisation.</strong> Only rounded, aggregated figures for one item are sent to the model. No person-level data exists anywhere.</li>
-            <li><strong>Full lineage.</strong> Every reported figure points to its source file and line.</li>
-            <li><strong>Works offline.</strong> Without an AI key, a template drafts the commentary and every other control still applies.</li>
-          </ul>
+          <div class="role-panel" id="role-panel" role="tabpanel"></div>
         </div>
-      </div>
+      </section>
 
-      <div class="band band-muted">
-        <div class="band-inner">
-          <p class="eyebrow eyebrow-dark">Impact by role</p>
-          <h2 class="band-title">Built around the people who own the close.</h2>
-          <div class="cards-4">
-            <article class="pitch-card compact"><h3>Head of finance</h3><p>One comparable view of all sites, with material items already explained.</p></article>
-            <article class="pitch-card compact"><h3>Controllers</h3><p>Review and approve drafts instead of writing every narrative from scratch.</p></article>
-            <article class="pitch-card compact"><h3>Site finance</h3><p>Local accounts and cost centres stay visible beside the group structure.</p></article>
-            <article class="pitch-card compact"><h3>IT, audit and governance</h3><p>SQL logic and mapping tables that can move to a central platform; logged AI use.</p></article>
-          </div>
+      <section class="section section-tight">
+        <div class="section-head reveal">
+          <p class="eyebrow">Business case</p>
+          <h2 class="title">Hours per monthly close, <em>before and after.</em></h2>
         </div>
-      </div>
+        <div class="hours reveal" id="hours-viz"></div>
+        <div class="table-wrap reveal"><table class="plain-table" id="table-business-case"></table></div>
+      </section>
 
-      <div class="band">
-        <div class="band-inner">
-          <p class="eyebrow eyebrow-dark">Before and after</p>
-          <h2 class="band-title">Estimated hours per monthly close</h2>
-          <div class="table-wrap"><table class="pitch-table" id="table-business-case"></table></div>
-          <p class="stack">Open stack: <span>Python</span><span>DuckDB</span><span>SQL</span><span>pandas</span><span>FastAPI</span><span>Plotly</span><span>Claude API</span><span>KNIME</span></p>
+      <section class="section section-tight">
+        <div class="section-head reveal">
+          <p class="eyebrow">Questions</p>
+          <h2 class="title">Asked by <em>every</em> finance team.</h2>
         </div>
-      </div>
+        <div class="faq reveal">
+          <details><summary>Is any of our data sent to an AI model?</summary><p>Only the rounded, aggregated figures of one flagged item, such as "spend effect EUR 477k", and only when an API key is configured. Raw files, rows and names never leave the machine. Without a key, nothing is sent at all.</p></details>
+          <details><summary>What if the AI writes a wrong number?</summary><p>The draft is rejected automatically. It is rewritten once with feedback; if it fails again, a template text is used. A text with an unchecked figure cannot be approved.</p></details>
+          <details><summary>Can we change the thresholds and the cost assumptions?</summary><p>Yes. Materiality thresholds are in one configuration file, and the share of each cost type that moves with volume is in one reference table. Both are applied on the next run.</p></details>
+          <details><summary>Do the sites lose their own account structure?</summary><p>No. Every row keeps its local account and cost-centre code beside the group codes, so each site still recognises its data.</p></details>
+          <details><summary>How does this move to our data platform?</summary><p>The transformations are plain SQL, and the mappings are tables. Both can move to a central platform or be rebuilt in a low-code tool such as KNIME. A parity check is included.</p></details>
+          <details><summary>Is this real company data?</summary><p>No. This is an independent portfolio prototype. Every site, figure and stakeholder is synthetic.</p></details>
+        </div>
+      </section>
 
-      <div class="band band-cta">
-        <div class="band-inner cta-inner">
-          <div>
-            <h2 class="band-title">See the whole month-end in the live prototype.</h2>
-            <p class="band-lead">Five working views, from data quality to approved commentary.</p>
-          </div>
-          <div class="hero-ctas">
-            <button class="btn btn-accent btn-lg" data-goto="overview">Launch the platform</button>
-            <a class="btn btn-outline-light btn-lg" href="https://github.com/saleemasim968-source/finance-month-end-variance-copilot" target="_blank" rel="noopener">View the source</a>
-          </div>
+      <section class="cta reveal">
+        <h2 class="display display-sm">See the whole close <em>in one place.</em></h2>
+        <p class="lead">Five working views, from data quality to approved commentary.</p>
+        <div class="ctas">
+          <button class="btn btn-ink btn-lg" data-goto="overview">Open the platform</button>
+          <a class="btn btn-line btn-lg" href="https://github.com/saleemasim968-source/finance-month-end-variance-copilot" target="_blank" rel="noopener">View the source</a>
         </div>
-      </div>
+      </section>
     </section>
 
-    <!-- Overview -->
+    <!-- Overview ------------------------------------------------------------------------------ -->
     <section class="view" id="view-overview" role="tabpanel" hidden>
       <div class="tiles" id="kpi-tiles"></div>
       <p class="footnote" id="not-posted-note"></p>
@@ -216,7 +242,7 @@
       </div>
     </section>
 
-    <!-- Site comparison -->
+    <!-- Site comparison ----------------------------------------------------------------------- -->
     <section class="view" id="view-sites" role="tabpanel" hidden>
       <div class="grid-2">
         <div class="card">
@@ -247,7 +273,7 @@
       </div>
     </section>
 
-    <!-- Variance bridge -->
+    <!-- Variance bridge ----------------------------------------------------------------------- -->
     <section class="view" id="view-bridge" role="tabpanel" hidden>
       <div class="card">
         <div class="card-head">
@@ -265,13 +291,13 @@
       </div>
     </section>
 
-    <!-- Flagged items -->
+    <!-- Review (flagged items) ---------------------------------------------------------------- -->
     <section class="view" id="view-flags" role="tabpanel" hidden>
       <p class="intro">Material variances need a reviewed explanation. A draft is written from the calculated figures only. Every number in it is checked against the data, and a controller approves it. Cost-centre owners can add the cause.</p>
       <div id="flag-list"></div>
     </section>
 
-    <!-- Data quality -->
+    <!-- Data quality -------------------------------------------------------------------------- -->
     <section class="view" id="view-quality" role="tabpanel" hidden>
       <div class="tiles" id="dq-tiles"></div>
       <div class="card">

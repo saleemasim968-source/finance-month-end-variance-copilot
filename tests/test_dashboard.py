@@ -175,3 +175,12 @@ def test_business_case_endpoint_matches_the_document(client):
     data = client.get("/api/business-case").json()
     assert len(data["rows"]) == 4
     assert data["today_h"] == 18.5 and data["after_h"] == 3.3
+
+
+def test_samples_show_each_raw_file_exactly_as_it_arrives(client):
+    from src.pipeline.run import ROOT
+    samples = client.get("/api/samples").json()
+    assert [s["site"] for s in samples] == ["FAB_NORTH", "FAB_ALPS", "FAB_ASIA"]
+    for sample in samples:
+        lines = (ROOT / "data" / "raw" / sample["file"]).read_text(encoding="utf-8").splitlines()
+        assert sample["header"] == lines[0] and sample["lines"] == lines[1:3]

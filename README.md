@@ -1,8 +1,10 @@
-# Finance Month-End Variance Copilot
+# Keystone Close
+
+*Month-end variance intelligence. Project name in the specification documents: Month-End Variance Copilot.*
 
 > **Independent portfolio project. All data is synthetic, and all sites and stakeholders are fictional. This is not the work of any real company and contains no internal or confidential information.**
 
-At month-end, three fictional wafer fabs each send a cost report in their own layout, language, unit and currency. This prototype turns them into one reviewed variance report:
+At month-end, three fictional wafer fabs each send a cost report in their own layout, language, unit and currency. Keystone Close turns them into one reviewed variance report:
 
 1. **Harmonise:** one reporting table on the group chart of accounts, in EUR, with the local codes and the source line kept on every row.
 2. **Check:** duplicates, missing actuals and unmapped codes are reported, and every site and month is reconciled to the source.
@@ -32,7 +34,7 @@ The commentary works without any API key: a fixed template writes the drafts. To
 
 | View | Shows |
 |---|---|
-| Home | Landing page: the problem, how the platform works, live proof points read from the pipeline, AI controls, impact by role, before/after hours |
+| Home | Landing page: the live grid of material items, how the platform works (with real file lines, reconciliation results, a miniature bridge and a verified draft), evidence, AI controls, roles, before/after hours, FAQ |
 | Overview | Plan, actual, variance, volume and spend effect; monthly split; one row per site |
 | Site comparison | Cost per wafer, plan and actual; monthly trend; variance % by site and cost type |
 | Variance bridge | Volume effect plus spend effect per cost type = total variance, per site and month, with every underlying row and its source line |

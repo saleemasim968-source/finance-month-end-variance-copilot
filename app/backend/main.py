@@ -15,6 +15,7 @@ warehouse and the review store:
   PUT  /api/flags/{id}/cause           cost-centre owner's cause
   GET  /api/data-quality               findings, reconciliation, mapping coverage
   GET  /api/business-case              hours per close, read from docs/business_case.md
+  GET  /api/samples                    header and first data lines of each raw site file
   POST /api/pipeline/run               rebuild everything from the raw files
 
 Run: python -m app.backend   (then open http://127.0.0.1:8000)
@@ -84,7 +85,7 @@ def review_store():
     return ReviewStore(settings.review_path)
 
 
-app = FastAPI(title="Finance Month-End Variance Copilot", version="1.0")
+app = FastAPI(title="Keystone Close API", version="1.1")
 
 
 # --- Read endpoints ----------------------------------------------------------------------------
@@ -138,6 +139,25 @@ def get_business_case():
             for a, t, n, s in re.findall(r"^\| ([A-Z][^|]+)\| (\d+\.\d) \| (\d+\.\d) \| ([^|]+)\|$", text, re.MULTILINE)]
     return {"rows": rows, "today_h": round(sum(r["today_h"] for r in rows), 1),
             "after_h": round(sum(r["after_h"] for r in rows), 1)}
+
+
+SAMPLE_FILES = {
+    "FAB_NORTH": ("data/raw/fab_north_costs.csv", "English · EUR · comma-separated"),
+    "FAB_ALPS": ("data/raw/fab_alps_kosten.csv", "German · thousands of EUR · decimal comma"),
+    "FAB_ASIA": ("data/raw/fab_asia_gl_export.csv", "GL export · ringgit · plan and actual as rows"),
+}
+
+
+@app.get("/api/samples")
+def get_samples(lines: int = 2):
+    """The raw files exactly as they arrive, for the landing page."""
+    samples = []
+    for site, (path, description) in SAMPLE_FILES.items():
+        with (ROOT / path).open(encoding="utf-8") as handle:
+            head = [next(handle).rstrip("\n") for _ in range(1 + max(1, min(lines, 5)))]
+        samples.append({"site": site, "file": Path(path).name, "description": description,
+                        "header": head[0], "lines": head[1:]})
+    return samples
 
 
 @app.get("/api/flags")

@@ -1,4 +1,4 @@
-// Month-End Variance Copilot - frontend. Plain JavaScript; every figure comes from the backend API.
+// Keystone Close - frontend. Plain JavaScript; every figure comes from the backend API.
 
 const state = { tab: "overview", period: "all", site: "all", meta: null };
 const SITE_SLOT = {};               // colour follows the site, never its rank
@@ -91,41 +91,184 @@ function plot(id, traces, layout) { Plotly.react(id, traces, baseLayout(layout),
 
 // --- Home (landing page) ----------------------------------------------------------------------
 
+const ROLES = [
+  { title: "Head of finance", lead: "One comparable view of every site, with the material items already explained and approved.",
+    points: [["One structure", "for all sites, so cost per wafer means the same everywhere."],
+      ["Volume or spending", "is answered for every variance, not argued case by case."],
+      ["A faster close", "because harmonising and tie-outs no longer take controller days."]] },
+  { title: "Controllers", lead: "Review and approve drafts instead of writing every narrative from scratch.",
+    points: [["Drafts from the data", "for every material item, in English or German."],
+      ["Every figure checked", "before you see it; a wrong number blocks approval."],
+      ["Causes from operations", "entered by the cost-centre owner and used in the next draft."]] },
+  { title: "Site finance", lead: "The group view never hides the local one.",
+    points: [["Local codes kept", "beside the group account and cost area on every row."],
+      ["Source lines", "for every figure, so any number can be found in your own export."],
+      ["Data issues reported", "with file and line, not silently corrected."]] },
+  { title: "IT, audit and governance", lead: "Logic that can be inspected, moved and controlled.",
+    points: [["Plain SQL and mapping tables", "that can move to a central data platform or KNIME."],
+      ["Every AI call logged", "with prompt, answer and check result; only aggregates are sent."],
+      ["Reproducible runs", "that rebuild from raw files with one command and identical results."]] },
+];
+
+function showRole(index) {
+  document.querySelectorAll(".role-tab").forEach((t, i) => t.setAttribute("aria-selected", String(i === index)));
+  const role = ROLES[index];
+  const panel = $("#role-panel");
+  panel.innerHTML = `<h3>${esc(role.title)}</h3><p>${esc(role.lead)}</p><ul class="role-points">${
+    role.points.map(([b, rest]) => `<li><span><b>${esc(b)}</b> ${esc(rest)}</span></li>`).join("")}</ul>`;
+  panel.classList.remove("role-fade");
+  void panel.offsetWidth;                    // restart the fade animation
+  panel.classList.add("role-fade");
+}
+
+function itemLabel(item) {
+  return item.item_type === "spend"
+    ? [`${item.group_area} · ${item.group_account}`, `${item.site} · ${periodLabel(item.period, true)}`]
+    : ["Wafer volume", `${item.site} · ${periodLabel(item.period, true)}`];
+}
+function effectCell(teur) {
+  const cls = teur > 0 ? "up" : teur < 0 ? "down" : "";
+  return `<span class="${cls}">${esc(sign(teur, `EUR ${nf0.format(Math.abs(teur))}k`))}</span>`;
+}
+
+function highlightFigures(text, figures) {
+  const allowed = new Set(Object.values(figures).map((v) => String(Math.abs(v))));
+  return esc(text).replace(/\d[\d,]*(?:\.\d+)?/g, (token) => {
+    const value = String(Number(token.replace(/,/g, "")));
+    return allowed.has(value) && !/^20\d\d$/.test(token) ? `<mark title="Found in the data">${token}</mark>` : token;
+  });
+}
+
+let homeAnimated = false;
 async function renderHome() {
-  const [dq, overview, flags, business] = await Promise.all([
-    api("/api/data-quality"), api("/api/overview"), api("/api/flags"), api("/api/business-case")]);
+  const [dq, overview, flags, business, samples, bridge] = await Promise.all([
+    api("/api/data-quality"), api("/api/overview"), api("/api/flags"), api("/api/business-case"),
+    api("/api/samples"), api("/api/bridge")]);
   const passed = dq.reconciliation.filter((r) => r.passed).length;
   const worst = Math.max(...dq.reconciliation.map((r) => Math.abs(r.difference_eur)));
-  const flagCount = flags.length;
+  const verified = flags.filter((i) => i.commentary && i.commentary.check_passed).length;
   const approved = flags.filter((i) => i.commentary && i.commentary.status === "Approved").length;
   const sites = state.meta.sites.length;
   const saved = business.today_h - business.after_h;
 
-  $("#hero-stats").innerHTML = [
-    [`${dq.mapped_rows}/${dq.harmonised_rows}`, `rows mapped across ${sites} sites`],
-    [`${passed}/${dq.reconciliation.length}`, "reconciliation checks passed"],
-    [String(dq.findings.length), "source-data problems caught"],
-    [String(flagCount), `material items flagged · ${approved} approved`],
-  ].map(([v, l]) => `<div><span class="stat-value">${esc(v)}</span><span class="stat-label">${esc(l)}</span></div>`).join("");
+  // Live matrix of material items
+  const rows = flags.map((item) => {
+    const f = item.figures;
+    const spend = item.item_type === "spend";
+    const [name, sub] = itemLabel(item);
+    const c = item.commentary;
+    const status = !c ? '<span class="badge">No draft</span>'
+      : c.status === "Approved" ? '<span class="badge good">Approved</span>' : '<span class="badge warning">Draft</span>';
+    const check = c && c.check_passed ? '<span class="badge good">Verified</span>' : '<span class="badge critical">Unverified</span>';
+    const cells = [
+      `<span class="item-name">${esc(name)}</span><span class="item-sub">${esc(sub)}</span>`,
+      `EUR ${nf0.format(spend ? f.plan_teur : f.site_plan_cost_teur)}k`,
+      `EUR ${nf0.format(spend ? f.actual_teur : f.site_actual_cost_teur)}k`,
+      effectCell(spend ? f.volume_effect_teur : f.site_volume_effect_teur),
+      effectCell(spend ? f.spend_effect_teur : f.site_spend_effect_teur),
+      check, status,
+    ];
+    return `<tr data-goto="flags" title="Open in Review">${cells.map((html, i) =>
+      `<td class="${i > 0 && i < 5 ? "num" : ""}"><span class="cell">${html}</span></td>`).join("")}</tr>`;
+  });
+  $("#hero-matrix").innerHTML = `<thead><tr><th>Item</th><th class="num">Plan</th><th class="num">Actual</th>
+    <th class="num">Volume effect</th><th class="num">Spend effect</th><th>Figures</th><th>Status</th></tr></thead>
+    <tbody>${rows.join("")}</tbody>`;
+  $("#hero-stats").textContent = `${flags.length} material items out of ${nf0.format(dq.harmonised_rows)} rows · ` +
+    `${verified} of ${flags.length} drafts verified · ${approved} approved · ${passed}/${dq.reconciliation.length} reconciliation checks passed`;
+  const cells = [...document.querySelectorAll("#hero-matrix .cell")];
+  if (homeAnimated || matchMedia("(prefers-reduced-motion: reduce)").matches) cells.forEach((c) => c.classList.add("in"));
+  else cells.forEach((c, i) => setTimeout(() => c.classList.add("in"), 350 + i * 28));
+  homeAnimated = true;
 
-  const proof = [
+  // Format strip: how each site arrives, and what the platform does with it
+  const tokens = [
+    ...samples.map((s) => `<span class="token"><b>${esc(s.site)}</b> ${esc(s.description)}</span>`),
+    '<span class="token"><b>01.2026</b> → 2026-01</span>', '<span class="token"><b>Jan-26</b> → 2026-01</span>',
+    '<span class="token"><b>738,869 TEUR</b> → EUR 738,869</span>', '<span class="token"><b>MYR</b> → EUR at the monthly rate</span>',
+    '<span class="token"><b>BUD + ACT rows</b> → one row</span>', '<span class="token"><b>Duplicate lines</b> → removed and logged</span>',
+    '<span class="token"><b>Local codes</b> → kept beside group codes</span>',
+  ].join("");
+  $("#format-strip").innerHTML = tokens + tokens;     // doubled for a seamless loop
+
+  // 01 Harmonise: the raw files exactly as they arrive
+  $("#sample-lines").innerHTML = samples.map((s) => `<div class="code-file">
+      <div class="code-head"><b>${esc(s.file)}</b><span>${esc(s.site)}</span></div>
+      <pre class="code-body"><span class="hdr">${esc(s.header)}</span>\n${esc(s.lines[0])}</pre></div>`).join("") +
+    `<div class="arrow-row">↓ <b>${nf0.format(dq.harmonised_rows)} rows</b>, one per site · month · area · account, all in EUR</div>`;
+
+  // 02 Check: one square per reconciliation check
+  $("#recon-viz").innerHTML = dq.reconciliation.map((r) =>
+    `<i class="${r.passed ? "" : "fail"}" title="${esc(r.site)} ${esc(periodLabel(r.period))} ${esc(r.measure)}: ${r.passed ? "pass" : "fail"}"></i>`).join("");
+  const caption = $("#recon-caption") || Object.assign(document.createElement("p"), { id: "recon-caption", className: "recon-caption" });
+  caption.innerHTML = `<b>${passed} of ${dq.reconciliation.length}</b> site-month checks pass · largest difference <b>EUR ${nf0.format(worst)}</b> · ${dq.findings.length} source problems reported`;
+  $("#recon-viz").after(caption);
+
+  // 03 Analyse: the variance bridge in miniature
+  const steps = [["Vol", bridge.totals.volume_effect, "volume effect"],
+    ...bridge.by_account.map((a) => [a.group_account.slice(0, 3), a.spend_effect, `spend: ${a.group_account}`])];
+  let running = 0;
+  const bars = steps.map(([label, value, name]) => {
+    const start = running; running += value;
+    return { label, name, low: Math.min(start, running), high: Math.max(start, running), value, kind: value >= 0 ? "up" : "down" };
+  });
+  bars.push({ label: "Total", name: "total variance", low: Math.min(0, running), high: Math.max(0, running), value: running, kind: "total" });
+  const lo = Math.min(0, ...bars.map((b) => b.low)), hi = Math.max(0, ...bars.map((b) => b.high));
+  const pctOf = (v) => ((v - lo) / (hi - lo)) * 100;
+  $("#mini-bridge").innerHTML = bars.map((b) => `<div class="bar ${b.kind}" title="${esc(b.name)}: ${esc(eurK(b.value, true))}">
+      <span style="bottom:${pctOf(b.low).toFixed(1)}%;height:${(pctOf(b.high) - pctOf(b.low)).toFixed(1)}%"></span></div>`).join("");
+  const axis = $("#mini-axis") || Object.assign(document.createElement("div"), { id: "mini-axis", className: "mini-axis" });
+  axis.innerHTML = bars.map((b) => `<span>${esc(b.label)}</span>`).join("");
+  $("#mini-bridge").after(axis);
+
+  // 04 Explain: the largest spend item's draft, with every verified figure marked
+  const showcase = flags.filter((i) => i.item_type === "spend" && i.commentary)
+    .sort((a, b) => Math.abs(b.figures.spend_effect_teur) - Math.abs(a.figures.spend_effect_teur))[0];
+  if (showcase) {
+    const c = showcase.commentary;
+    const writer = { llm: c.model || "Claude", template: "template", edited: "reviewer edit" }[c.source];
+    $("#draft-meta").innerHTML = `<b>${esc(itemLabel(showcase)[0])}</b><span>${esc(itemLabel(showcase)[1])}</span>
+      <span>· ${esc(c.status)} · written by ${esc(writer)} · ${c.check_passed ? "all figures verified" : "unverified figures"}</span>`;
+    $("#draft-text").innerHTML = highlightFigures(c.text, showcase.figures);
+  }
+
+  // Evidence numbers
+  $("#proof-grid").innerHTML = [
     [`${Math.round(dq.mapped_rows / dq.harmonised_rows * 100)}<small>%</small>`, "Rows on one structure",
-      `${nf0.format(dq.harmonised_rows)} rows from ${sites} layouts, languages and currencies, each with its local codes and source line.`],
-    [`EUR ${nf0.format(worst)}`, "Largest reconciliation gap",
-      `${passed} of ${dq.reconciliation.length} site-month checks tie back to the source files.`],
-    [`${dq.findings.length}<small>/2</small>`, "Planted data errors caught",
-      "A duplicated ledger line and a missing actual, both reported with file and line."],
-    [`${flagCount}<small> of ${nf0.format(dq.harmonised_rows)}</small>`, "Items flagged as material",
-      `${overview.flags.spend || 0} spend and ${overview.flags.volume || 0} volume flags, each tracing to a planted business event.`],
-    [`~${nf0.format(saved)}<small> h</small>`, "Saved per close (estimate)",
-      `${nf1.format(business.today_h)} h of manual work becomes ${nf1.format(business.after_h)} h of review.`],
-  ];
-  $("#proof-grid").innerHTML = proof.map(([v, l, sub]) =>
-    `<div class="proof"><div class="proof-value">${v}</div><div class="proof-label">${esc(l)}</div><div class="proof-sub">${esc(sub)}</div></div>`).join("");
+      `${nf0.format(dq.harmonised_rows)} rows from ${sites} layouts, languages and currencies.`],
+    [`€${nf0.format(worst)}`, "Largest reconciliation gap", `${passed} of ${dq.reconciliation.length} checks tie back to the source files.`],
+    [`${dq.findings.length}<small>/2</small>`, "Planted errors caught", "A duplicated ledger line and a missing actual, with file and line."],
+    [`${flags.length}<small>/${nf0.format(dq.harmonised_rows)}</small>`, "Items flagged",
+      `${overview.flags.spend || 0} spend and ${overview.flags.volume || 0} volume, each tracing to a planted event.`],
+    [`~${nf0.format(saved)}<small>h</small>`, "Saved per close", `Estimate: ${nf1.format(business.today_h)} h of manual work becomes ${nf1.format(business.after_h)} h of review.`],
+  ].map(([v, l, sub]) => `<div class="number"><div class="number-value">${v}</div><div class="number-label">${esc(l)}</div><div class="number-sub">${esc(sub)}</div></div>`).join("");
 
-  const rows = business.rows.map((r) => `<tr><td>${esc(r.activity)}</td><td class="num">${nf1.format(r.today_h)}</td><td class="num">${nf1.format(r.after_h)}</td><td class="muted">${esc(r.assumption)}</td></tr>`).join("");
-  $("#table-business-case").innerHTML = `<thead><tr><th>Activity</th><th class="num">Today (h)</th><th class="num">With the platform (h)</th><th>Assumption</th></tr></thead>
-    <tbody>${rows}<tr class="total"><td>Total per close</td><td class="num">${nf1.format(business.today_h)}</td><td class="num">${nf1.format(business.after_h)}</td><td>About ${nf0.format(saved)} hours saved per close (estimate)</td></tr></tbody>`;
+  // Before and after
+  $("#hours-viz").innerHTML = `
+    <div class="hours-row"><div class="hours-label">Today<small>manual close</small></div><div><div class="hours-bar today" data-width="100">${nf1.format(business.today_h)} h</div></div></div>
+    <div class="hours-row"><div class="hours-label">With Keystone<small>review and approve</small></div><div><div class="hours-bar after" data-width="${(business.after_h / business.today_h * 100).toFixed(1)}">${nf1.format(business.after_h)} h</div></div></div>`;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll("#hours-viz .hours-bar").forEach((bar) => { bar.style.width = `max(${bar.dataset.width}%, 96px)`; });
+  }));
+  const tableRows = business.rows.map((r) => `<tr><td>${esc(r.activity)}</td><td class="num">${nf1.format(r.today_h)}</td><td class="num">${nf1.format(r.after_h)}</td><td class="muted">${esc(r.assumption)}</td></tr>`).join("");
+  $("#table-business-case").innerHTML = `<thead><tr><th>Activity</th><th class="num">Today (h)</th><th class="num">With Keystone (h)</th><th>Assumption</th></tr></thead>
+    <tbody>${tableRows}<tr class="total"><td>Total per close</td><td class="num">${nf1.format(business.today_h)}</td><td class="num">${nf1.format(business.after_h)}</td><td>About ${nf0.format(saved)} hours saved per close (estimate)</td></tr></tbody>`;
+
+  observeReveals();
+}
+
+let revealObserver;
+function observeReveals() {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const show = (el) => el.classList.add("in");
+  if (reduce || !("IntersectionObserver" in window)) {
+    document.querySelectorAll(".reveal").forEach(show);
+    return;
+  }
+  revealObserver ||= new IntersectionObserver((entries) => entries.forEach((entry) => {
+    if (entry.isIntersecting) { show(entry.target); revealObserver.unobserve(entry.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll(".reveal:not(.in)").forEach((el) => revealObserver.observe(el));
 }
 
 // --- Overview --------------------------------------------------------------------------------
@@ -437,6 +580,9 @@ function selectTab(tab) {
   $("#site-filter").hidden = tab !== "bridge";
   $("#filters").hidden = ["home", "flags", "quality"].includes(tab);
   $("#app-bar").hidden = tab === "home";
+  $("#app-title").textContent = { overview: "Overview", sites: "Site comparison", bridge: "Variance bridge",
+    flags: "Review", quality: "Data quality" }[tab] || "";
+  document.title = tab === "home" ? "Keystone Close" : `${$("#app-title").textContent} · Keystone Close`;
   window.scrollTo({ top: 0 });
   history.replaceState(null, "", `${location.search}#${tab}`);
   render();
@@ -457,11 +603,33 @@ async function loadMeta() {
   $("#site-select").value = state.site;
   const m = state.meta.materiality;
   const shares = Object.entries(state.meta.variable_shares).map(([a, s]) => `${a} ${Math.round(s * 100)}%`).join(", ");
+  const wordmark = document.querySelector(".site-header .wordmark").innerHTML;
+  const repo = "https://github.com/saleemasim968-source/finance-month-end-variance-copilot";
+  const doc = (path, label) => `<li><a href="${repo}/blob/main/${path}" target="_blank" rel="noopener">${label}</a></li>`;
   $("#footer").innerHTML = `
-    <p><strong>Method.</strong> Positive variance = cost above plan (unfavourable). Flexed budget = plan × ((1 − variable share) + variable share × actual wafers / plan wafers). Volume effect = flexed budget − plan; spend effect = actual − flexed budget.</p>
-    <p><strong>Assumption.</strong> Share of each cost type that moves with wafer volume: ${esc(shares)}. Kept in data/reference/cost_behaviour.csv and can be changed.</p>
-    <p><strong>Flags.</strong> Spend flag when |spend effect| ≥ EUR ${nf0.format(m.spend_abs_eur)} and ≥ ${m.spend_pct * 100}% of the flexed budget. Volume flag when wafers differ from plan by ≥ ${m.volume_pct * 100}%.</p>
-    <p>${esc(state.meta.notice)}</p>`;
+    <div class="footer-inner">
+      <div class="footer-brand"><a class="wordmark" href="#home" data-goto="home">${wordmark}</a>
+        <p>Month-end variance intelligence: harmonise, check, analyse and explain, with every figure traced to its source.</p>
+        <p>${esc(state.meta.notice)}</p></div>
+      <div><h4>Platform</h4><ul>
+        <li><button class="link" data-goto="overview">Overview</button></li>
+        <li><button class="link" data-goto="sites">Site comparison</button></li>
+        <li><button class="link" data-goto="bridge">Variance bridge</button></li>
+        <li><button class="link" data-goto="flags">Review</button></li>
+        <li><button class="link" data-goto="quality">Data quality</button></li></ul></div>
+      <div><h4>Project</h4><ul>
+        <li><a href="${repo}" target="_blank" rel="noopener">Source on GitHub</a></li>
+        ${doc("docs/architecture.md", "Architecture")}${doc("docs/business_case.md", "Business case")}
+        ${doc("docs/demo_script.md", "Demo script")}</ul></div>
+      <div><h4>Records</h4><ul>
+        ${doc("docs/build_log.md", "Build log")}${doc("docs/log_entries_for_07.md", "Decisions and changes")}
+        ${doc("docs/closing_report_draft.md", "Closing report")}${doc("docs/evidence/test_report.txt", "Test report")}</ul></div>
+    </div>
+    <div class="footer-method">
+      <p><strong>Method.</strong> Positive variance = cost above plan (unfavourable). Flexed budget = plan × ((1 − variable share) + variable share × actual wafers / plan wafers). Volume effect = flexed budget − plan; spend effect = actual − flexed budget.</p>
+      <p><strong>Assumption.</strong> Share of each cost type that moves with wafer volume: ${esc(shares)}. Kept in data/reference/cost_behaviour.csv.</p>
+      <p><strong>Flags.</strong> Spend flag when |spend effect| ≥ EUR ${nf0.format(m.spend_abs_eur)} and ≥ ${m.spend_pct * 100}% of the flexed budget. Volume flag when wafers differ from plan by ≥ ${m.volume_pct * 100}%.</p>
+    </div>`;
 }
 
 function setupTheme() {
@@ -510,6 +678,8 @@ async function init() {
     const target = e.target.closest("[data-goto]");
     if (target) { e.preventDefault(); selectTab(target.dataset.goto); }
   });
+  document.querySelectorAll(".role-tab").forEach((t) => t.addEventListener("click", () => showRole(Number(t.dataset.role))));
+  showRole(0);
   window.addEventListener("hashchange", () => {
     const tab = location.hash.slice(1);
     if (RENDER[tab] && tab !== state.tab) selectTab(tab);

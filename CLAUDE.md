@@ -1,4 +1,4 @@
-# Month-End Variance Copilot — CLAUDE.md
+# Month-End Variance Copilot (product name: Keystone Close) — CLAUDE.md
 
 Weekend portfolio project (10–11 Oct 2026). The specification is the eight documents in `docs/` (Word originals) and `docs/md/` (markdown conversions). **The documents are the source of truth; this file is a summary.** If they disagree with this file, the documents win. Raise the conflict; don't resolve it silently.
 
